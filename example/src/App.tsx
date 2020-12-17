@@ -49,7 +49,7 @@ const App = () => {
 
       <div className="selection-box-info">
         Selection Box:
-        <div>right: {selectionBox?.top || ''}</div>
+        <div>top: {selectionBox?.top || ''}</div>
         <div>left: {selectionBox?.left || ''}</div>
         <div>width: {selectionBox?.width || ''}</div>
         <div>height: {selectionBox?.height || ''}</div>
