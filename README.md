@@ -12,7 +12,7 @@ npm install --save react-drag-to-select
 
 ## Usage
 
-[https://giphy.com/embed/Kuo9GQn42WBhBUy3tC]()
+![Example](https://media.giphy.com/media/Kuo9GQn42WBhBUy3tC/source.gif)
 
 ```tsx
 
