@@ -54,7 +54,7 @@ This library will not select your items. You have to handle selection yourself i
 |eventsElement|No|Window, HTMLElement or null|window|Element to listen mouse events|
 |selectionProps|No|React.HTMLAttributes||Props of selection - you can pass style here as shown below|
 
-##Selection styling
+## Selection styling
 
 To style your selection, pass `selectionProps: { style }` prop:
 
