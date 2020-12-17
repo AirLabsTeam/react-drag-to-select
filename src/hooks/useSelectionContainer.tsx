@@ -14,6 +14,15 @@ interface UseSelectionContainerResult {
   DragSelection: () => ReactElement;
 }
 
+export interface UseSelectionContainerParams<T extends HTMLElement> {
+  onSelectionStart?: () => void;
+  onSelectionEnd?: () => void;
+  onSelectionChange: OnSelectionChange;
+  isEnabled?: boolean;
+  selectionProps?: MouseSelectionProps;
+  eventsElement?: Window | T | null;
+}
+
 /**
  * Use this hook to enable mouse selection on a container.
  * To prevent interfering with drag-n-drop feature, add data-draggable='true' to draggable item. Selection won't fire when click happens on that element
@@ -23,21 +32,14 @@ interface UseSelectionContainerResult {
  * @param enabled if false, mouse selection is disabled (true by default)
  * @param selectionProps mouse selection configuration
  */
-export function useSelectionContainer({
+export function useSelectionContainer<T extends HTMLElement>({
   onSelectionChange,
   onSelectionEnd,
   onSelectionStart,
   isEnabled = true,
   selectionProps = {},
   eventsElement,
-}: {
-  onSelectionStart?: () => void;
-  onSelectionEnd?: () => void;
-  onSelectionChange: OnSelectionChange;
-  isEnabled: boolean;
-  selectionProps?: MouseSelectionProps;
-  eventsElement: Window | HTMLElement;
-}): UseSelectionContainerResult {
+}: UseSelectionContainerParams<T>): UseSelectionContainerResult {
   const containerRef = useRef<MouseSelectionRef>(null);
 
   const { cancelCurrentSelection } = useSelectionLogic({

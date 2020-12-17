@@ -1,11 +1,20 @@
 import { RefObject, useCallback, useEffect, useRef } from 'react';
 import throttle from 'lodash.throttle';
-import { MouseSelectionRef, OnSelectionChange, Point, SelectionBox } from '../utils/types';
+import { MouseSelectionRef, Point, SelectionBox } from '../utils/types';
 import { calculateBoxArea, calculateSelectionBox } from '../utils/boxes';
 import { isElementDraggable } from '../utils/utils';
+import { UseSelectionContainerParams } from './useSelectionContainer';
 
 interface UseSelectionLogicResult {
   cancelCurrentSelection: () => void;
+}
+
+interface UseSelectionLogicParams<T extends HTMLElement>
+  extends Pick<
+    UseSelectionContainerParams<T>,
+    'onSelectionChange' | 'onSelectionEnd' | 'onSelectionStart' | 'isEnabled' | 'eventsElement'
+  > {
+  containerRef: RefObject<MouseSelectionRef>;
 }
 
 /**
@@ -18,21 +27,14 @@ interface UseSelectionLogicResult {
  * @param enabled if false, mousedown event is not attached
  * @param eventsElement element which should listen to mouse events
  */
-export function useSelectionLogic({
+export function useSelectionLogic<T extends HTMLElement>({
   containerRef,
   onSelectionChange,
   onSelectionStart,
   onSelectionEnd,
   isEnabled = true,
   eventsElement = typeof window !== 'undefined' ? window : undefined,
-}: {
-  containerRef: RefObject<MouseSelectionRef>;
-  onSelectionChange: OnSelectionChange;
-  onSelectionStart?: () => void;
-  onSelectionEnd?: () => void;
-  isEnabled: boolean;
-  eventsElement?: Window | HTMLElement;
-}): UseSelectionLogicResult {
+}: UseSelectionLogicParams<T>): UseSelectionLogicResult {
   const startPoint = useRef<null | Point>(null);
   const endPoint = useRef<null | Point>(null);
   const isSelecting = useRef(false);
@@ -142,7 +144,7 @@ export function useSelectionLogic({
         document.body.style.removeProperty('webkitUserSelect');
 
         eventsElement?.removeEventListener('mousemove', onMouseMove);
-        eventsElement?.removeEventListener('mouseup', onMouseUp);
+        window?.removeEventListener('mouseup', onMouseUp);
       }
     },
     [eventsElement, cancelCurrentSelection, onMouseMove],
@@ -164,19 +166,21 @@ export function useSelectionLogic({
         startPoint.current = getPointFromEvent(e as MouseEvent);
 
         eventsElement?.addEventListener('mousemove', onMouseMove);
-        eventsElement?.addEventListener('mouseup', onMouseUp);
+        window?.addEventListener('mouseup', onMouseUp);
       }
     },
     [eventsElement, getPointFromEvent, onMouseMove, onMouseUp],
   );
 
   useEffect(() => {
+    console.log('Events element', eventsElement);
+
     eventsElement?.addEventListener('mousedown', onMouseDown);
 
     return () => {
       eventsElement?.removeEventListener('mousedown', onMouseDown);
       eventsElement?.removeEventListener('mousemove', onMouseMove);
-      eventsElement?.removeEventListener('mouseup', onMouseUp);
+      window.removeEventListener('mouseup', onMouseUp);
     };
   }, [eventsElement, onMouseDown, onMouseMove, onMouseUp]);
 
