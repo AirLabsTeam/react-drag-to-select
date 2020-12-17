@@ -84,7 +84,7 @@ The default style is
 
 ## Used by
 
-- [Air](https://air.inc/home) <img src="./example/assets/airLogo.png" width="100"/>
+- [<img src="./example/assets/airLogo.png" width="50"/>](https://air.inc/home)
 
 ## License
 
