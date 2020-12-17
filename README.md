@@ -12,7 +12,7 @@ npm install --save react-drag-to-select
 
 ## Usage
 
-![Example](https://media.giphy.com/media/Kuo9GQn42WBhBUy3tC/source.gif)
+![Example](example/assets/chrome-capture.gif)
 
 ```tsx
 
@@ -84,7 +84,7 @@ The default style is
 
 ## Used by
 
-- [Air](https://air.inc/home)
+- [Air](https://air.inc/home) <img src="./example/assets/airLogo.png" width="100"/>
 
 ## License
 
