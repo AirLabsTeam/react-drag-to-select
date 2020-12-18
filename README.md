@@ -40,7 +40,7 @@ const App = () => {
 2. Render `<DragSelection/>` somewhere in code
 3. That's it! Mouse selection will appear, when you click and drag within window or element passed in `eventsElement`.
 
-This library will not select your items. You have to handle selection yourself in `onSelectionChange` method (see example).
+This library will not select your items. You have to handle selection yourself in `onSelectionChange` method (see example). You can use `boxesIntersects(boxA, boxB)` method to check if element intersetcs with selection.
 
 
 ## useSelectionContainer arguments
@@ -80,6 +80,17 @@ The default style is
   position: `absolute`,
   zIndex: 99,
 }
+```
+
+## Working with draggable elements
+
+If you use any drag-n-drop library (like `react-dnd` or `react-beautiful-dnd`), you may want to not start selection when user starts dragging an element.
+To prevent this, add `data-draggable=true` to your element - selection won't be started if user clicks and drags this element or its children:
+
+```html
+<div data-draggable=true>
+...
+</div>
 ```
 
 ## Used by

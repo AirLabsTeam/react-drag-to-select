@@ -1,5 +1,9 @@
 import { Box, Point } from './types';
 
+/** This method returns true if two boxes intersects
+ * @param boxA
+ * @param boxB
+ */
 export const boxesIntersect = (boxA: Box, boxB: Box) =>
   boxA.left <= boxB.left + boxB.width &&
   boxA.left + boxA.width >= boxB.left &&
