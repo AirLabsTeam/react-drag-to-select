@@ -33,6 +33,7 @@ const MouseSelection = forwardRef(({ style = {}, ...props }: MouseSelectionProps
               background: 'rgba(155, 193, 239, 0.4)',
               position: `absolute`,
               zIndex: 99,
+              pointerEvents: 'none',
               ...style,
               ...(selectionBox || {}),
             }}

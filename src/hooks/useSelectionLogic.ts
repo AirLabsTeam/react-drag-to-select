@@ -173,8 +173,6 @@ export function useSelectionLogic<T extends HTMLElement>({
   );
 
   useEffect(() => {
-    console.log('Events element', eventsElement);
-
     eventsElement?.addEventListener('mousedown', onMouseDown);
 
     return () => {
