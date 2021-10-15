@@ -7,7 +7,7 @@
 ## Install
 
 ```bash
-npm install --save react-drag-to-select
+npm install --save @air/react-drag-to-select
 ```
 
 ## Usage
