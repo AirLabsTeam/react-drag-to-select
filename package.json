@@ -1,6 +1,6 @@
 {
   "name": "react-drag-to-select",
-  "version": "1.0.2",
+  "version": "2.0.0",
   "description": "A react library which adds drag to select to your app",
   "author": "Air",
   "license": "MIT",
@@ -65,6 +65,7 @@
     "dist"
   ],
   "dependencies": {
-    "caniuse-lite": "^1.0.30001267"
+    "caniuse-lite": "^1.0.30001267",
+    "react-style-object-to-css": "^1.1.2"
   }
 }

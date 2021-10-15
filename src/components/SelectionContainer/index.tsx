@@ -1,6 +1,8 @@
 import React, { forwardRef, useImperativeHandle, useRef } from 'react';
 import ReactDOM from 'react-dom';
 import { MouseSelectionRef, SelectionBox } from '../../utils/types';
+// @ts-ignore
+import styleObjectToCSS from 'react-style-object-to-css';
 
 export interface MouseSelectionProps extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -30,19 +32,19 @@ const MouseSelection = forwardRef(({ style = {}, ...props }: MouseSelectionProps
             height: box.height,
           };
 
-          selectionBoxRef.current.style.cssText = `
-            
-          `;
+          selectionBoxRef.current.style.cssText = styleObjectToCSS(styles);
         }
       },
       clearSelectionBox: () => {
         if (selectionBoxRef.current) {
-          selectionBoxRef.current.style.cssText = `
-            top: 0;
-            left: 0;
-            width: 0;
-            height: 0;
-          `;
+          const styles: React.CSSProperties = {
+            top: 0,
+            left: 0,
+            width: 0,
+            height: 0,
+          };
+
+          selectionBoxRef.current.style.cssText = styleObjectToCSS(styles);
         }
       },
     }),
