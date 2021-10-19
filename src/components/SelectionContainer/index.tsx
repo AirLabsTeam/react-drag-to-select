@@ -1,4 +1,4 @@
-import React, { forwardRef, useImperativeHandle, useRef } from 'react';
+import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import ReactDOM from 'react-dom';
 import { MouseSelectionRef, SelectionBox } from '../../utils/types';
 // @ts-ignore
@@ -10,8 +10,9 @@ export interface MouseSelectionProps extends React.HTMLAttributes<HTMLDivElement
  * This is a component responsible for displaying mouse selection box
  */
 const MouseSelection = forwardRef(({ style = {}, ...props }: MouseSelectionProps, ref) => {
-  const containerRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
   const selectionBoxRef = useRef<HTMLDivElement>(null);
+  const [, setForceUpdate] = useState(0);
 
   useImperativeHandle(
     ref,
@@ -50,10 +51,14 @@ const MouseSelection = forwardRef(({ style = {}, ...props }: MouseSelectionProps
     }),
   );
 
+  useEffect(() => {
+    setForceUpdate((number) => number + 1);
+  }, []);
+
   return (
     <div ref={containerRef}>
-      {typeof document !== 'undefined'
-        ? ReactDOM.createPortal(<div ref={selectionBoxRef} {...props} />, containerRef.current || document.body)
+      {containerRef.current
+        ? ReactDOM.createPortal(<div ref={selectionBoxRef} {...props} />, containerRef.current)
         : null}
     </div>
   );
