@@ -20,33 +20,37 @@ const MouseSelection = forwardRef(({ style = {}, ...props }: MouseSelectionProps
       getBoundingClientRect: () => containerRef.current?.getBoundingClientRect(),
       getParentBoundingClientRect: () => containerRef?.current?.parentElement?.getBoundingClientRect(),
       drawSelectionBox: (box: SelectionBox) => {
-        if (selectionBoxRef.current) {
-          const styles: React.CSSProperties = {
-            border: '1px solid #4C85D8',
-            background: 'rgba(155, 193, 239, 0.4)',
-            position: 'absolute',
-            pointerEvents: 'none',
-            ...style,
-            top: box.top,
-            left: box.left,
-            width: box.width,
-            height: box.height,
-          };
+        requestAnimationFrame(() => {
+          if (selectionBoxRef.current) {
+            const styles: React.CSSProperties = {
+              border: '1px solid #4C85D8',
+              background: 'rgba(155, 193, 239, 0.4)',
+              position: 'absolute',
+              pointerEvents: 'none',
+              ...style,
+              top: box.top,
+              left: box.left,
+              width: box.width,
+              height: box.height,
+            };
 
-          selectionBoxRef.current.style.cssText = styleObjectToCSS(styles);
-        }
+            selectionBoxRef.current.style.cssText = styleObjectToCSS(styles);
+          }
+        });
       },
       clearSelectionBox: () => {
-        if (selectionBoxRef.current) {
-          const styles: React.CSSProperties = {
-            top: 0,
-            left: 0,
-            width: 0,
-            height: 0,
-          };
+        requestAnimationFrame(() => {
+          if (selectionBoxRef.current) {
+            const styles: React.CSSProperties = {
+              top: 0,
+              left: 0,
+              width: 0,
+              height: 0,
+            };
 
-          selectionBoxRef.current.style.cssText = styleObjectToCSS(styles);
-        }
+            selectionBoxRef.current.style.cssText = styleObjectToCSS(styles);
+          }
+        });
       },
     }),
   );
