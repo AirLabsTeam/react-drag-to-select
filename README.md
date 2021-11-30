@@ -82,16 +82,17 @@ The default style is
 }
 ```
 
-## Working with draggable elements
+## Disabling selection on elements
 
-If you use any drag-n-drop library (like `react-dnd` or `react-beautiful-dnd`), you may want to not start selection when user starts dragging an element.
-To prevent this, add `data-draggable=true` to your element - selection won't be started if user clicks and drags this element or its children:
+To prevent starting selection, add `data-disableSelect` to element:
 
 ```html
-<div data-draggable=true>
+<div data-disableSelect=true>
 ...
 </div>
 ```
+
+
 
 ## Used by
 

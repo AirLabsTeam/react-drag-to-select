@@ -2,7 +2,7 @@ import { RefObject, useCallback, useEffect, useRef } from 'react';
 import throttle from 'lodash.throttle';
 import { MouseSelectionRef, Point, SelectionBox } from '../utils/types';
 import { calculateBoxArea, calculateSelectionBox } from '../utils/boxes';
-import { isElementDraggable } from '../utils/utils';
+import { isSelectionDisabled } from '../utils/utils';
 import { UseSelectionContainerParams } from './useSelectionContainer';
 
 interface UseSelectionLogicResult {
@@ -154,9 +154,10 @@ export function useSelectionLogic<T extends HTMLElement>({
     (e: Event) => {
       // handle only left button click
       if ((e as MouseEvent).button === 0 && isEnabledRef.current) {
+        // @ts-ignore
         // if user clicked on element which is draggable (so it might be start of drag event), ignore it
-        const isDraggable = isElementDraggable(e.target as HTMLElement);
-        if (isDraggable) {
+        const isDisabled = isSelectionDisabled(e.target as HTMLElement);
+        if (isDisabled) {
           return;
         }
 
