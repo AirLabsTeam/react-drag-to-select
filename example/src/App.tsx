@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { Box, boxesIntersect } from 'react-drag-to-select';
+import { Box, boxesIntersect } from '@air/react-drag-to-select';
 import MouseSelection from './MouseSelection';
 
 const App = () => {

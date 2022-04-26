@@ -1,6 +1,6 @@
 import React from 'react';
-import { useSelectionContainer } from 'react-drag-to-select';
-import { UseSelectionContainerParams } from 'react-drag-to-select/dist/hooks/useSelectionContainer';
+import { useSelectionContainer } from '@air/react-drag-to-select';
+import { UseSelectionContainerParams } from '@air/react-drag-to-select/dist/hooks/useSelectionContainer';
 
 export interface MouseSelectionProps extends Pick<UseSelectionContainerParams<HTMLElement>, 'onSelectionChange'> {}
 

@@ -22,7 +22,7 @@
     "react-scripts": "link:../node_modules/react-scripts",
     "typescript": "link:../node_modules/typescript",
     "react-style-object-to-css": "^1.1.2",
-    "react-drag-to-select": "link:.."
+    "@air/react-drag-to-select": "link:.."
   },
   "devDependencies": {
     "@babel/plugin-syntax-object-rest-spread": "^7.8.3"
