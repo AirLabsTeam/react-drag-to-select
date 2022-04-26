@@ -6,12 +6,12 @@ const App = () => {
   const [selectionBox, setSelectionBox] = useState<Box>();
   const [selectedIndexes, setSelectedIndexes] = useState<number[]>([]);
   const selectableItems = useRef<Box[]>([]);
+  const elementsContainerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    const elementsContainer = document.getElementById('elements-container');
-    if (elementsContainer) {
-      Array.from(elementsContainer.childNodes).forEach((item) => {
-        //@ts-ignore
+  
+    if (elementsContainerRef.current) {
+      Array.from(elementsContainerRef.current.children).forEach((item) => {
         const { left, top, width, height } = item.getBoundingClientRect();
         selectableItems.current.push({
           left,
@@ -41,7 +41,7 @@ const App = () => {
   return (
     <div className="container">
       <MouseSelection onSelectionChange={handleSelectionChange} />
-      <div id="elements-container" className="elements-container">
+      <div id="elements-container" className="elements-container" ref={elementsContainerRef}>
         {Array.from({ length: 16 }, (_, i) => (
           <div key={i} className={`element ${selectedIndexes.includes(i) ? 'selected' : ''} `} />
         ))}
