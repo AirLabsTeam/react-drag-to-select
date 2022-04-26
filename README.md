@@ -7,7 +7,7 @@
 ## Install
 
 ```bash
-npm install --save @air/react-drag-to-select react-style-object-to-css
+npm install --save @air/react-drag-to-select react-style-object-to-css lodash.throttle
 ```
 ## Usage
 
