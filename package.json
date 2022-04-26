@@ -26,7 +26,7 @@
   "peerDependencies": {
     "@types/lodash.throttle": "^4.1.6",
     "lodash.throttle": "^4.1.1",
-    "react": "^16.0.0",
+    "react": "16 - 18",
     "react-style-object-to-css": "^1.1.2"
   },
   "devDependencies": {
@@ -57,8 +57,8 @@
     "microbundle-crl": "^0.13.10",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.0.4",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
     "react-scripts": "^3.4.1",
     "typescript": "^3.7.5"
   },

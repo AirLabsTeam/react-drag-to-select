@@ -1,29 +1,13 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { Box, boxesIntersect } from 'react-drag-to-select';
-import MouseSelection from './MouseSelection';
+import { Box, boxesIntersect, useSelectionContainer } from '@air/react-drag-to-select';
 
 const App = () => {
   const [selectionBox, setSelectionBox] = useState<Box>();
   const [selectedIndexes, setSelectedIndexes] = useState<number[]>([]);
   const selectableItems = useRef<Box[]>([]);
+  const elementsContainerRef = useRef<HTMLDivElement | null>(null);
 
-  useEffect(() => {
-    const elementsContainer = document.getElementById('elements-container');
-    if (elementsContainer) {
-      Array.from(elementsContainer.childNodes).forEach((item) => {
-        //@ts-ignore
-        const { left, top, width, height } = item.getBoundingClientRect();
-        selectableItems.current.push({
-          left,
-          top,
-          width,
-          height,
-        });
-      });
-    }
-  }, []);
-
-  const handleSelectionChange = useCallback(
+  const onSelectionChange = useCallback(
     (box: Box) => {
       setSelectionBox(box);
       const indexesToSelect: number[] = [];
@@ -38,10 +22,43 @@ const App = () => {
     [selectableItems],
   );
 
+  const { DragSelection } = useSelectionContainer({
+    eventsElement: document.getElementById('root'),
+    onSelectionChange,
+    onSelectionStart: () => {
+      console.log('OnSelectionStart');
+    },
+    onSelectionEnd: () => console.log('OnSelectionEnd'),
+    selectionProps: {
+      style: {
+        border: '2px dashed purple',
+        borderRadius: 4,
+        backgroundColor: 'brown',
+        opacity: 0.5,
+      },
+    },
+  });
+
+  useEffect(() => {
+  
+    if (elementsContainerRef.current) {
+      Array.from(elementsContainerRef.current.children).forEach((item) => {
+        const { left, top, width, height } = item.getBoundingClientRect();
+        selectableItems.current.push({
+          left,
+          top,
+          width,
+          height,
+        });
+      });
+    }
+  }, []);
+
+  
   return (
     <div className="container">
-      <MouseSelection onSelectionChange={handleSelectionChange} />
-      <div id="elements-container" className="elements-container">
+      <DragSelection />
+      <div id="elements-container" className="elements-container" ref={elementsContainerRef}>
         {Array.from({ length: 16 }, (_, i) => (
           <div key={i} className={`element ${selectedIndexes.includes(i) ? 'selected' : ''} `} />
         ))}

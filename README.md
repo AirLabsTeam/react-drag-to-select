@@ -7,12 +7,13 @@
 ## Install
 
 ```bash
-npm install --save @air/react-drag-to-select
+npm install --save @air/react-drag-to-select react-style-object-to-css
 ```
-
 ## Usage
 
 ![Example](example/assets/chrome-capture.gif)
+
+Check out this codesandbox for a complete working example: https://codesandbox.io/s/billowing-lake-rzhid4
 
 ```tsx
 
