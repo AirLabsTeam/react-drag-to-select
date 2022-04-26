@@ -1,12 +1,43 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { Box, boxesIntersect } from '@air/react-drag-to-select';
-import MouseSelection from './MouseSelection';
+import { Box, boxesIntersect, useSelectionContainer } from '@air/react-drag-to-select';
 
 const App = () => {
   const [selectionBox, setSelectionBox] = useState<Box>();
   const [selectedIndexes, setSelectedIndexes] = useState<number[]>([]);
   const selectableItems = useRef<Box[]>([]);
   const elementsContainerRef = useRef<HTMLDivElement | null>(null);
+
+  const onSelectionChange = useCallback(
+    (box: Box) => {
+      setSelectionBox(box);
+      const indexesToSelect: number[] = [];
+      selectableItems.current.forEach((item, index) => {
+        if (boxesIntersect(box, item)) {
+          indexesToSelect.push(index);
+        }
+      });
+
+      setSelectedIndexes(indexesToSelect);
+    },
+    [selectableItems],
+  );
+
+  const { DragSelection } = useSelectionContainer({
+    eventsElement: document.getElementById('root'),
+    onSelectionChange,
+    onSelectionStart: () => {
+      console.log('OnSelectionStart');
+    },
+    onSelectionEnd: () => console.log('OnSelectionEnd'),
+    selectionProps: {
+      style: {
+        border: '2px dashed purple',
+        borderRadius: 4,
+        backgroundColor: 'brown',
+        opacity: 0.5,
+      },
+    },
+  });
 
   useEffect(() => {
   
@@ -23,24 +54,10 @@ const App = () => {
     }
   }, []);
 
-  const handleSelectionChange = useCallback(
-    (box: Box) => {
-      setSelectionBox(box);
-      const indexesToSelect: number[] = [];
-      selectableItems.current.forEach((item, index) => {
-        if (boxesIntersect(box, item)) {
-          indexesToSelect.push(index);
-        }
-      });
-
-      setSelectedIndexes(indexesToSelect);
-    },
-    [selectableItems],
-  );
-
+  
   return (
     <div className="container">
-      <MouseSelection onSelectionChange={handleSelectionChange} />
+      <DragSelection />
       <div id="elements-container" className="elements-container" ref={elementsContainerRef}>
         {Array.from({ length: 16 }, (_, i) => (
           <div key={i} className={`element ${selectedIndexes.includes(i) ? 'selected' : ''} `} />
