@@ -12,7 +12,7 @@ interface UseSelectionLogicResult {
 interface UseSelectionLogicParams<T extends HTMLElement>
   extends Pick<
     UseSelectionContainerParams<T>,
-    'onSelectionChange' | 'onSelectionEnd' | 'onSelectionStart' | 'isEnabled' | 'eventsElement'
+    'onSelectionChange' | 'onSelectionEnd' | 'onSelectionStart' | 'isEnabled' | 'eventsElement' | 'scrollContainerRef'
   > {
   containerRef: RefObject<MouseSelectionRef>;
 }
@@ -34,6 +34,7 @@ export function useSelectionLogic<T extends HTMLElement>({
   onSelectionEnd,
   isEnabled = true,
   eventsElement = typeof window !== 'undefined' ? window : undefined,
+  scrollContainerRef,
 }: UseSelectionLogicParams<T>): UseSelectionLogicResult {
   const startPoint = useRef<null | Point>(null);
   const endPoint = useRef<null | Point>(null);
@@ -74,8 +75,8 @@ export function useSelectionLogic<T extends HTMLElement>({
         rect = containerRef.current?.getParentBoundingClientRect();
       }
       return {
-        x: event.clientX - (rect?.left || 0),
-        y: event.clientY - (rect?.top || 0),
+        x: event.clientX - (rect?.left || 0) + (scrollContainerRef?.current?.scrollLeft || 0),
+        y: event.clientY - (rect?.top || 0) + (scrollContainerRef?.current?.scrollTop || 0),
       };
     },
     [containerRef],

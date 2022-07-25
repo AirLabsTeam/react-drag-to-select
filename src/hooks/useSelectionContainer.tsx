@@ -1,4 +1,4 @@
-import React, { ReactElement, useRef } from 'react';
+import React, { MutableRefObject, ReactElement, useCallback, useRef } from 'react';
 import MouseSelection, { MouseSelectionProps } from '../components/SelectionContainer';
 import { useSelectionLogic } from './useSelectionLogic';
 import { MouseSelectionRef, OnSelectionChange } from '../utils/types';
@@ -21,6 +21,7 @@ export interface UseSelectionContainerParams<T extends HTMLElement> {
   isEnabled?: boolean;
   selectionProps?: MouseSelectionProps;
   eventsElement?: Window | T | null;
+  scrollContainerRef?: MutableRefObject<HTMLElement>;
 }
 
 /**

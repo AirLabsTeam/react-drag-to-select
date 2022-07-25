@@ -6,6 +6,7 @@ const App = () => {
   const [selectedIndexes, setSelectedIndexes] = useState<number[]>([]);
   const selectableItems = useRef<Box[]>([]);
   const elementsContainerRef = useRef<HTMLDivElement | null>(null);
+  const bodyRef = useRef(document ? document.body : undefined);
 
   const onSelectionChange = useCallback(
     (box: Box) => {
@@ -23,6 +24,7 @@ const App = () => {
   );
 
   const { DragSelection } = useSelectionContainer({
+    scrollContainerRef: bodyRef,
     eventsElement: document.getElementById('root'),
     onSelectionChange,
     onSelectionStart: () => {
