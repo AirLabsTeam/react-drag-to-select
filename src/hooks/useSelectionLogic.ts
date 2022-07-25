@@ -1,31 +1,31 @@
 import { RefObject, useCallback, useEffect, useRef } from 'react';
 import throttle from 'lodash.throttle';
-import { MouseSelectionRef, Point, SelectionBox } from '../utils/types';
+import { MouseSelectionRef, OnSelectionChange, Point, SelectionBox } from '../utils/types';
 import { calculateBoxArea, calculateSelectionBox } from '../utils/boxes';
 import { isSelectionDisabled } from '../utils/utils';
-import { UseSelectionContainerParams } from './useSelectionContainer';
 
-interface UseSelectionLogicResult {
+export interface UseSelectionLogicResult {
   cancelCurrentSelection: () => void;
 }
 
-interface UseSelectionLogicParams<T extends HTMLElement>
-  extends Pick<
-    UseSelectionContainerParams<T>,
-    'onSelectionChange' | 'onSelectionEnd' | 'onSelectionStart' | 'isEnabled' | 'eventsElement'
-  > {
+export interface UseSelectionLogicParams<T extends HTMLElement> {
+  /** This callback will fire when the user starts selecting */
+  onSelectionStart?: () => void;
+  /** This callback will fire when the user finishes selecting */
+  onSelectionEnd?: () => void;
+  /** This callback is throttled at 150ms and will fire when the user's mouse changes position while selecting */
+  onSelectionChange: OnSelectionChange;
+  /** This boolean enables selecting  */
+  isEnabled?: boolean;
+  /** This is an HTML element that the mouse events (mousedown, mouseup, mousemove) should be attached to. Defaults to the window */
+  eventsElement?: Window | T | null;
+  /** This is the ref of the parent of the selection box  */
   containerRef: RefObject<MouseSelectionRef>;
 }
 
 /**
  * This hook contains logic for selecting. It starts 'selection' on mousedown event and finishes it on mouseup event.
  * When mousemove event is detected and user is selecting, it calls onSelectionChange and containerRef.drawSelectionBox
- * @param containerRef reference to a component which displays selection
- * @param onSelectionEnd method to call when selection ends
- * @param onSelectionStart method to call when selection starts
- * @param onSelectionChange method to call when selection box is changed. This method is throttled with 150ms
- * @param enabled if false, mousedown event is not attached
- * @param eventsElement element which should listen to mouse events
  */
 export function useSelectionLogic<T extends HTMLElement>({
   containerRef,
@@ -73,6 +73,7 @@ export function useSelectionLogic<T extends HTMLElement>({
       if (!rect) {
         rect = containerRef.current?.getParentBoundingClientRect();
       }
+
       return {
         x: event.clientX - (rect?.left || 0),
         y: event.clientY - (rect?.top || 0),
