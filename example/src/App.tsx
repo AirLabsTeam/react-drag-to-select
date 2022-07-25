@@ -10,9 +10,7 @@ const App = () => {
   const onSelectionChange = useCallback(
     (box: Box) => {
       /**
-       * the `react-drag-to-select` isn't aware of (for good reason) the scroll position relative to it's parent
-       * so you need to include this in the calcuations. 
-       * 
+       * Here we make sure to adjust the box's left and top with the scroll position of the window 
        * @see https://github.com/AirLabsTeam/react-drag-to-select/#scrolling
        */
       const scrollAwareBox: Box = {
