@@ -1,6 +1,6 @@
 {
   "name": "@air/react-drag-to-select",
-  "version": "2.2.1",
+  "version": "2.2.2",
   "description": "A react library which adds drag to select to your app",
   "author": "Air",
   "license": "MIT",
