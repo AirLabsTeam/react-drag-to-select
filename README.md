@@ -93,7 +93,13 @@ To prevent starting selection, add `data-disableSelect` to element:
 </div>
 ```
 
+## Scrolling
 
+Because we use the mouse position so heavily, if your selection container is inside of an area that scrolls (and honestly, what scenario would that not happen in?), you need to handle some logic on your side to make this work. The reason why we force you to do this, instead of building it into the library is because it would force our library to try and be too smart. 
+
+If the `<DragSelection />` is inside of a scroll container, the library can't inherently know which parent it's scrolled inside of nor it's position inside of the container (if there are other elements above it). How this is solve on your end will be modifiying the `left` and `top` of the box that is used in `handleSelectionChange`. 
+
+See the [`onSelectionChange` in the example](https://github.com/AirLabsTeam/react-drag-to-select/blob/main/example/src/App.tsx#L10) for an idea of how to do this.
 
 ## Used by
 
