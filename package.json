@@ -24,8 +24,6 @@
     "deploy": "gh-pages -d example/build"
   },
   "peerDependencies": {
-    "@types/lodash.throttle": "^4.1.6",
-    "lodash.throttle": "^4.1.1",
     "react": "16 - 18",
     "react-style-object-to-css": "^1.1.2"
   },
@@ -34,7 +32,6 @@
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
     "@types/jest": "^25.1.4",
-    "@types/lodash.throttle": "^4.1.6",
     "@types/node": "^12.12.38",
     "@types/react": "^16.9.27",
     "@types/react-dom": "^16.9.7",
@@ -53,7 +50,6 @@
     "eslint-plugin-react": "^7.17.0",
     "eslint-plugin-standard": "^4.0.1",
     "gh-pages": "^2.2.0",
-    "lodash.throttle": "^4.1.1",
     "microbundle-crl": "^0.13.10",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.0.4",

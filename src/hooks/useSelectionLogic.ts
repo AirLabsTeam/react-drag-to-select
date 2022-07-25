@@ -1,5 +1,4 @@
 import { RefObject, useCallback, useEffect, useRef } from 'react';
-import throttle from 'lodash.throttle';
 import { MouseSelectionRef, OnSelectionChange, Point, SelectionBox } from '../utils/types';
 import { calculateBoxArea, calculateSelectionBox } from '../utils/boxes';
 import { isSelectionDisabled } from '../utils/utils';
@@ -13,7 +12,7 @@ export interface UseSelectionLogicParams<T extends HTMLElement> {
   onSelectionStart?: () => void;
   /** This callback will fire when the user finishes selecting */
   onSelectionEnd?: () => void;
-  /** This callback is throttled at 150ms and will fire when the user's mouse changes position while selecting */
+  /** This callback will fire when the user's mouse changes position while selecting using requestAnimationFrame */
   onSelectionChange: OnSelectionChange;
   /** This boolean enables selecting  */
   isEnabled?: boolean;
@@ -43,13 +42,21 @@ export function useSelectionLogic<T extends HTMLElement>({
   const currentSelectionChange = useRef(onSelectionChange);
   const currentSelectionStart = useRef(onSelectionStart);
   const currentSelectionEnd = useRef(onSelectionEnd);
+  const onChangeRefId = useRef<number | undefined>();
   const isEnabledRef = useRef(isEnabled);
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  currentSelectionChange.current = useCallback(throttle(onSelectionChange, 150), [onSelectionChange]);
+  currentSelectionChange.current = useCallback(
+    (box) => {
+      onChangeRefId.current = requestAnimationFrame(() => {
+        onSelectionChange(box);
+      });
+    },
+    [onSelectionChange],
+  );
   currentSelectionStart.current = onSelectionStart;
   currentSelectionEnd.current = onSelectionEnd;
   isEnabledRef.current = isEnabled;
+
   /**
    * Method to cancel selecting and reset internal data
    */
@@ -58,8 +65,9 @@ export function useSelectionLogic<T extends HTMLElement>({
     endPoint.current = null;
     isSelecting.current = false;
     containerRef.current?.clearSelectionBox();
-    // @ts-ignore - cancel comes from throttle
-    currentSelectionChange.current?.cancel();
+    if (onChangeRefId.current) {
+      cancelAnimationFrame(onChangeRefId.current);
+    }
     if (currentSelectionEnd?.current) {
       currentSelectionEnd.current();
     }
