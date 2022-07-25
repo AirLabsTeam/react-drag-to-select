@@ -9,10 +9,20 @@ const App = () => {
 
   const onSelectionChange = useCallback(
     (box: Box) => {
-      setSelectionBox(box);
+      /**
+       * Here we make sure to adjust the box's left and top with the scroll position of the window 
+       * @see https://github.com/AirLabsTeam/react-drag-to-select/#scrolling
+       */
+      const scrollAwareBox: Box = {
+        ...box,
+        top: box.top + window.scrollY,
+        left: box.left + window.scrollX
+      }
+
+      setSelectionBox(scrollAwareBox);
       const indexesToSelect: number[] = [];
       selectableItems.current.forEach((item, index) => {
-        if (boxesIntersect(box, item)) {
+        if (boxesIntersect(scrollAwareBox, item)) {
           indexesToSelect.push(index);
         }
       });
