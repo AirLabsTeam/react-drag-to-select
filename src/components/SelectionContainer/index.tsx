@@ -14,6 +14,10 @@ const MouseSelection = forwardRef(({ style = {}, ...props }: MouseSelectionProps
   const selectionBoxRef = useRef<HTMLDivElement>(null);
   const [, setForceUpdate] = useState(0);
 
+
+
+  
+
   useImperativeHandle(
     ref,
     (): MouseSelectionRef => ({
