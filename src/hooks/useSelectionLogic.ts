@@ -12,7 +12,7 @@ export interface UseSelectionLogicParams<T extends HTMLElement> {
   onSelectionStart?: () => void;
   /** This callback will fire when the user finishes selecting */
   onSelectionEnd?: () => void;
-  /** This callback is throttled at 150ms and will fire when the user's mouse changes position while selecting */
+  /** This callback will fire when the user's mouse changes position while selecting using requestAnimationFrame */
   onSelectionChange: OnSelectionChange;
   /** This boolean enables selecting  */
   isEnabled?: boolean;
@@ -45,11 +45,14 @@ export function useSelectionLogic<T extends HTMLElement>({
   const onChangeRefId = useRef<number | undefined>();
   const isEnabledRef = useRef(isEnabled);
 
-  currentSelectionChange.current = useCallback((box) => {
-    onChangeRefId.current = requestAnimationFrame(() => {
-      onSelectionChange(box);
-    })
-  }, [onSelectionChange]);
+  currentSelectionChange.current = useCallback(
+    (box) => {
+      onChangeRefId.current = requestAnimationFrame(() => {
+        onSelectionChange(box);
+      });
+    },
+    [onSelectionChange],
+  );
   currentSelectionStart.current = onSelectionStart;
   currentSelectionEnd.current = onSelectionEnd;
   isEnabledRef.current = isEnabled;
