@@ -1,6 +1,6 @@
 # react-drag-to-select
 
-> A react library which adds drag to select to your app
+> A highly-perfomant (go ahead, test with 6x slowdown!) react library which adds drag to select to your app
 
 [![NPM](https://img.shields.io/npm/v/react-drag-to-select.svg)](https://www.npmjs.com/package/react-drag-to-select) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
