@@ -1,4 +1,4 @@
-import React, { ReactElement, useRef } from 'react';
+import React, { ReactElement, useCallback, useRef } from 'react';
 import MouseSelection, { MouseSelectionProps } from '../components/SelectionContainer';
 import { useSelectionLogic } from './useSelectionLogic';
 import { MouseSelectionRef, OnSelectionChange } from '../utils/types';
@@ -51,8 +51,7 @@ export function useSelectionContainer<T extends HTMLElement>({
     eventsElement,
   });
 
-  const DragSelection = () => <MouseSelection ref={containerRef} {...selectionProps} />;
-  DragSelection.displayName = 'DragSelection';
+  const DragSelection = useCallback(() => <MouseSelection ref={containerRef} {...selectionProps} />, []);
 
   return {
     cancelCurrentSelection,
