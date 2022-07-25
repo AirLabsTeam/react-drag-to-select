@@ -1,19 +1,27 @@
-import { RefObject, useCallback, useEffect, useRef } from 'react';
+import { MutableRefObject, RefObject, useCallback, useEffect, useRef } from 'react';
 import throttle from 'lodash.throttle';
-import { MouseSelectionRef, Point, SelectionBox } from '../utils/types';
+import { MouseSelectionRef, OnSelectionChange, Point, SelectionBox } from '../utils/types';
 import { calculateBoxArea, calculateSelectionBox } from '../utils/boxes';
 import { isSelectionDisabled } from '../utils/utils';
-import { UseSelectionContainerParams } from './useSelectionContainer';
 
-interface UseSelectionLogicResult {
+export interface UseSelectionLogicResult {
   cancelCurrentSelection: () => void;
 }
 
-interface UseSelectionLogicParams<T extends HTMLElement>
-  extends Pick<
-    UseSelectionContainerParams<T>,
-    'onSelectionChange' | 'onSelectionEnd' | 'onSelectionStart' | 'isEnabled' | 'eventsElement' | 'scrollContainerRef'
-  > {
+export interface UseSelectionLogicParams<T extends HTMLElement> {
+  /** This callback will fire when the user starts selecting */
+  onSelectionStart?: () => void;
+  /** This callback will fire when the user finishes selecting */
+  onSelectionEnd?: () => void;
+  /** This callback is throttled at 150ms and will fire when the user's mouse changes position while selecting */
+  onSelectionChange: OnSelectionChange;
+  /** This boolean enables selecting  */
+  isEnabled?: boolean;
+  /** This is an HTML element that the mouse events (mousedown, mouseup, mousemove) should be attached to. Defaults to the window */
+  eventsElement?: Window | T | null;
+  /** This is an HTML element that the selecting component lives inside of that can be scrolled. Because we need to calcuate the scroll position for include in the calculations, if you have the <DragSelection /> inside of a component that scrolls, you'll want to pass this prop to use it's scrollTop and scrollLeft in the calculations. */
+  scrollContainerRef?: MutableRefObject<HTMLElement>;
+  /** This is the ref of the parent of the selection box  */
   containerRef: RefObject<MouseSelectionRef>;
 }
 

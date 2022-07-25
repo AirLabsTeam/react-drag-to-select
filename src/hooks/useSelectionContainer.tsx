@@ -1,9 +1,9 @@
-import React, { MutableRefObject, ReactElement, useCallback, useRef } from 'react';
+import React, { ReactElement, useRef } from 'react';
 import MouseSelection, { MouseSelectionProps } from '../components/SelectionContainer';
-import { useSelectionLogic } from './useSelectionLogic';
-import { MouseSelectionRef, OnSelectionChange } from '../utils/types';
+import { MouseSelectionRef } from '../utils/types';
+import { useSelectionLogic, UseSelectionLogicParams } from './useSelectionLogic';
 
-interface UseSelectionContainerResult {
+export interface UseSelectionContainerResult {
   /**
    * method to cancel current selecting
    */
@@ -14,14 +14,13 @@ interface UseSelectionContainerResult {
   DragSelection: () => ReactElement;
 }
 
-export interface UseSelectionContainerParams<T extends HTMLElement> {
-  onSelectionStart?: () => void;
-  onSelectionEnd?: () => void;
-  onSelectionChange: OnSelectionChange;
-  isEnabled?: boolean;
+export interface UseSelectionContainerParams<T extends HTMLElement>
+  extends Pick<
+    UseSelectionLogicParams<T>,
+    'onSelectionChange' | 'onSelectionEnd' | 'onSelectionStart' | 'isEnabled' | 'eventsElement' | 'scrollContainerRef'
+  > {
+  /** These are props that get passed to the selection box component (where styling gets passed in) */
   selectionProps?: MouseSelectionProps;
-  eventsElement?: Window | T | null;
-  scrollContainerRef?: MutableRefObject<HTMLElement>;
 }
 
 /**
