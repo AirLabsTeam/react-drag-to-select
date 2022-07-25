@@ -17,7 +17,7 @@ export interface UseSelectionContainerResult {
 export interface UseSelectionContainerParams<T extends HTMLElement>
   extends Pick<
     UseSelectionLogicParams<T>,
-    'onSelectionChange' | 'onSelectionEnd' | 'onSelectionStart' | 'isEnabled' | 'eventsElement' | 'scrollContainerRef'
+    'onSelectionChange' | 'onSelectionEnd' | 'onSelectionStart' | 'isEnabled' | 'eventsElement'
   > {
   /** These are props that get passed to the selection box component (where styling gets passed in) */
   selectionProps?: MouseSelectionProps;
@@ -26,11 +26,6 @@ export interface UseSelectionContainerParams<T extends HTMLElement>
 /**
  * Use this hook to enable mouse selection on a container.
  * To prevent interfering with drag-n-drop feature, add data-draggable='true' to draggable item. Selection won't fire when click happens on that element
- * @param onSelectionStart method to call when selection starts
- * @param onSelectionEnd method to call when selection ends
- * @param onSelectionChange method to call when selection changes
- * @param enabled if false, mouse selection is disabled (true by default)
- * @param selectionProps mouse selection configuration
  */
 export function useSelectionContainer<T extends HTMLElement>({
   onSelectionChange,

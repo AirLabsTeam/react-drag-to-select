@@ -24,7 +24,6 @@ const App = () => {
   );
 
   const { DragSelection } = useSelectionContainer({
-    scrollContainerRef: bodyRef,
     eventsElement: document.getElementById('root'),
     onSelectionChange,
     onSelectionStart: () => {

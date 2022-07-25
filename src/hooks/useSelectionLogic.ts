@@ -1,4 +1,4 @@
-import { MutableRefObject, RefObject, useCallback, useEffect, useRef } from 'react';
+import { RefObject, useCallback, useEffect, useRef } from 'react';
 import throttle from 'lodash.throttle';
 import { MouseSelectionRef, OnSelectionChange, Point, SelectionBox } from '../utils/types';
 import { calculateBoxArea, calculateSelectionBox } from '../utils/boxes';
@@ -19,8 +19,6 @@ export interface UseSelectionLogicParams<T extends HTMLElement> {
   isEnabled?: boolean;
   /** This is an HTML element that the mouse events (mousedown, mouseup, mousemove) should be attached to. Defaults to the window */
   eventsElement?: Window | T | null;
-  /** This is an HTML element that the selecting component lives inside of that can be scrolled. Because we need to calcuate the scroll position for include in the calculations, if you have the <DragSelection /> inside of a component that scrolls, you'll want to pass this prop to use it's scrollTop and scrollLeft in the calculations. */
-  scrollContainerRef?: MutableRefObject<HTMLElement>;
   /** This is the ref of the parent of the selection box  */
   containerRef: RefObject<MouseSelectionRef>;
 }
@@ -28,12 +26,6 @@ export interface UseSelectionLogicParams<T extends HTMLElement> {
 /**
  * This hook contains logic for selecting. It starts 'selection' on mousedown event and finishes it on mouseup event.
  * When mousemove event is detected and user is selecting, it calls onSelectionChange and containerRef.drawSelectionBox
- * @param containerRef reference to a component which displays selection
- * @param onSelectionEnd method to call when selection ends
- * @param onSelectionStart method to call when selection starts
- * @param onSelectionChange method to call when selection box is changed. This method is throttled with 150ms
- * @param enabled if false, mousedown event is not attached
- * @param eventsElement element which should listen to mouse events
  */
 export function useSelectionLogic<T extends HTMLElement>({
   containerRef,
@@ -42,7 +34,6 @@ export function useSelectionLogic<T extends HTMLElement>({
   onSelectionEnd,
   isEnabled = true,
   eventsElement = typeof window !== 'undefined' ? window : undefined,
-  scrollContainerRef,
 }: UseSelectionLogicParams<T>): UseSelectionLogicResult {
   const startPoint = useRef<null | Point>(null);
   const endPoint = useRef<null | Point>(null);
@@ -82,9 +73,10 @@ export function useSelectionLogic<T extends HTMLElement>({
       if (!rect) {
         rect = containerRef.current?.getParentBoundingClientRect();
       }
+
       return {
-        x: event.clientX - (rect?.left || 0) + (scrollContainerRef?.current?.scrollLeft || 0),
-        y: event.clientY - (rect?.top || 0) + (scrollContainerRef?.current?.scrollTop || 0),
+        x: event.clientX - (rect?.left || 0),
+        y: event.clientY - (rect?.top || 0),
       };
     },
     [containerRef],
