@@ -17,6 +17,9 @@ jobs:
         with:
           path: example/node_modules
           key: example-modules-${{ hashFiles('example/package-lock.json') }}
+      - name: Install dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: npm ci --ignore-scripts
       - name: Cypress run
         uses: cypress-io/github-action@v4
         with:
