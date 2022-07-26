@@ -20,7 +20,7 @@ jobs:
 
       - name: Install root dependencies
         if: steps.root-cache.outputs.cache-hit != 'true'
-        run: cd example; npm ci --ignore-scripts
+        run: npm ci --ignore-scripts
 
       - name: Cache example dependencies
         id: example-cache
