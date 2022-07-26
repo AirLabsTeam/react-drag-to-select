@@ -13,10 +13,10 @@ jobs:
 
       - name: Cache root dependencies
         id: root-cache
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: ./node_modules
-          key: e2e-modules-${{ hashFiles('package-lock.json') }}
+          key: modules-${{ hashFiles('package-lock.json') }}
 
       - name: Install root dependencies
         if: steps.root-cache.outputs.cache-hit != 'true'
@@ -24,10 +24,10 @@ jobs:
 
       - name: Cache example dependencies
         id: example-cache
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: example/node_modules
-          key: e2e-example-modules-${{ hashFiles('example/package-lock.json') }}
+          key: modules-${{ hashFiles('example/package-lock.json') }}
 
       - name: Install example dependencies
         if: steps.example-cache.outputs.cache-hit != 'true'
