@@ -2,12 +2,16 @@
   <img src="example/assets/chrome-capture.gif">
 </p>
 
-# react-drag-to-select
+<h1 align="center">React drag-to-select</h1>
+<p align="center"><i>A highly-performant React library which adds drag-to-select to your app.</i></p>
 
-A highly-perfomant React library which adds drag-to-select to your app
-
-[![NPM](https://img.shields.io/npm/v/@air/react-drag-to-select?color=2E77FF)](https://www.npmjs.com/package/@air/react-drag-to-select)
-![MIT License](https://img.shields.io/npm/l/@air/react-drag-to-select?color=41C300)
+<p align="center">
+  <img src="https://img.shields.io/github/checks-status/AirLabsTeam/react-drag-to-select/main?color=41C300" />
+  <a href="https://www.npmjs.com/package/@air/react-drag-to-select">
+    <img src="https://img.shields.io/npm/v/@air/react-drag-to-select?color=2E77FF" alt="size" />
+  </a>
+  <img src="https://img.shields.io/npm/l/@air/react-drag-to-select?color=41C300" alt="MIT License">
+</p>
 
 ## Install
 
@@ -15,8 +19,6 @@ A highly-perfomant React library which adds drag-to-select to your app
 npm install --save @air/react-drag-to-select
 ```
 ## Usage
-
-
 
 Check out this codesandbox for a complete working example: https://codesandbox.io/s/billowing-lake-rzhid4
 
