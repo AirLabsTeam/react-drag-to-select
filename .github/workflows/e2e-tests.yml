@@ -1,7 +1,7 @@
-name: Tests
+name: End-to-end tests
 on: [push]
 jobs:
-  checkout:
+  tests:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -32,9 +32,6 @@ jobs:
       - name: Install example dependencies
         if: steps.example-cache.outputs.cache-hit != 'true'
         run: cd example; npm ci --ignore-scripts
-
-      - name: Run unit tests
-        run: npm run test
 
       - name: Build project
         run: npm run build
