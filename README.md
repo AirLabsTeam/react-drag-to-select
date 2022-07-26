@@ -6,11 +6,11 @@
 <p align="center"><i>A highly-performant React library which adds drag-to-select to your app.</i></p>
 
 <p align="center">
-  <img src="https://img.shields.io/github/checks-status/AirLabsTeam/react-drag-to-select/main?color=41C300" />
+  <img alt="e2e" src="https://github.com/AirLabsTeam/react-drag-to-select/actions/workflows/e2e-tests.yml/badge.svg" />
+  <img alt="unit" src="https://github.com/AirLabsTeam/react-drag-to-select/actions/workflows/unit-tests.yml/badge.svg" />
   <a href="https://www.npmjs.com/package/@air/react-drag-to-select">
     <img src="https://img.shields.io/npm/v/@air/react-drag-to-select?color=2E77FF" alt="size" />
   </a>
-  <img src="https://img.shields.io/npm/l/@air/react-drag-to-select?color=41C300" alt="MIT License">
 </p>
 
 ## Install
@@ -111,4 +111,6 @@ See the [`onSelectionChange` in the example](https://github.com/AirLabsTeam/reac
 ## Used by
 
 [<img src="./example/assets/air.png" height="25" width="50">]([http://google.com.au/](https://air.inc))
+
+<img src="https://img.shields.io/npm/l/@air/react-drag-to-select?color=41C300" alt="MIT License">
 
