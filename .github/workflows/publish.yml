@@ -11,6 +11,11 @@ jobs:
         with:
           node-version: '16.x'
           registry-url: 'https://registry.npmjs.org'
+          scope: '@air'
+      - name: Configure Git
+        run: |
+          git config user.email "dwilt4rville@gmail.com"
+          git config user.name "Dan Wilt"
       - run: npm ci
       - run: npm publish --access public
         env:
