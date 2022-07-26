@@ -8,6 +8,15 @@ jobs:
         uses: actions/checkout@v2
       # Install NPM dependencies, cache them correctly
       # and run all Cypress tests
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - name: Cache dependencies
+        id: cache
+        uses: actions/cache@v2
+        with:
+          path: example/node_modules
+          key: example-modules-${{ hashFiles('example/package-lock.json') }}
       - name: Cypress run
         uses: cypress-io/github-action@v4
         with:
