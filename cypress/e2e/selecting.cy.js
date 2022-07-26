@@ -13,11 +13,10 @@ describe('react-drag-to-select example', () => {
       })
       .trigger('mousemove', 400, 150, {
         eventConstructor: 'MouseEvent',
-        button: 1,
       })
       .trigger('mouseup', 400, 150, {
         eventConstructor: 'MouseEvent',
-        button: 1,
+        button: 0,
       });
 
     for (let index = 0; index < 16; index++) {
@@ -42,12 +41,11 @@ describe('react-drag-to-select example', () => {
       })
       .trigger('mousemove', 320, 320, {
         eventConstructor: 'MouseEvent',
-        button: 1,
         force: true
       })
       .trigger('mouseup', 320, 320, {
         eventConstructor: 'MouseEvent',
-        button: 1,
+        button: 0,
         force: true
       })
 
