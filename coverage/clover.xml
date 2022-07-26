@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1658802240555" clover="3.2.0">
+  <project timestamp="1658802240555" name="All files">
+    <metrics statements="7" coveredstatements="4" conditionals="4" coveredconditionals="4" methods="3" coveredmethods="2" elements="14" coveredelements="10" complexity="0" loc="7" ncloc="7" packages="1" files="1" classes="1"/>
+    <file name="boxes.ts" path="/Users/dwilt/Documents/GitHub/react-drag-to-select/src/utils/boxes.ts">
+      <metrics statements="7" coveredstatements="4" conditionals="4" coveredconditionals="4" methods="3" coveredmethods="2"/>
+      <line num="7" count="1" type="stmt"/>
+      <line num="8" count="8" type="cond" truecount="4" falsecount="0"/>
+      <line num="13" count="1" type="stmt"/>
+      <line num="14" count="0" type="stmt"/>
+      <line num="15" count="0" type="stmt"/>
+      <line num="19" count="0" type="stmt"/>
+      <line num="26" count="1" type="stmt"/>
+    </file>
+  </project>
+</coverage>
