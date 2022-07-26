@@ -9,15 +9,15 @@ describe('boxes utils', () => {
             left: 0,
             top: 0,
             width: 3,
-            height: 3
+            height: 3,
           },
           {
             left: 2,
             top: 2,
             width: 3,
-            height: 3
-          }
-        )
+            height: 3,
+          },
+        ),
       ).toBe(true);
 
       expect(
@@ -26,15 +26,15 @@ describe('boxes utils', () => {
             left: 0,
             top: 2,
             width: 3,
-            height: 3
+            height: 3,
           },
           {
             left: 2,
             top: 0,
             width: 3,
-            height: 3
-          }
-        )
+            height: 3,
+          },
+        ),
       ).toBe(true);
 
       expect(
@@ -43,32 +43,32 @@ describe('boxes utils', () => {
             left: 2,
             top: 2,
             width: 3,
-            height: 3
-          },
-          {
-            left: 0,
-            top: 0,
-            width: 3,
-            height: 3
-          }
-        )
-      ).toBe(true);
-
-      expect(
-        boxesIntersect(
-          {
-            left: 2,
-            top: 0,
-            width: 3,
-            height: 3
+            height: 3,
           },
           {
             left: 0,
+            top: 0,
+            width: 3,
+            height: 3,
+          },
+        ),
+      ).toBe(true);
+
+      expect(
+        boxesIntersect(
+          {
+            left: 2,
+            top: 0,
+            width: 3,
+            height: 3,
+          },
+          {
+            left: 0,
             top: 2,
             width: 3,
-            height: 3
-          }
-        )
+            height: 3,
+          },
+        ),
       ).toBe(true);
 
       expect(
@@ -77,15 +77,15 @@ describe('boxes utils', () => {
             left: 2,
             top: 2,
             width: 3,
-            height: 3
+            height: 3,
           },
           {
             left: 1,
             top: 1,
             width: 6,
-            height: 3
-          }
-        )
+            height: 3,
+          },
+        ),
       ).toBe(true);
 
       expect(
@@ -94,15 +94,15 @@ describe('boxes utils', () => {
             left: 1,
             top: 0,
             width: 4,
-            height: 4
+            height: 4,
           },
           {
             left: 3,
             top: 1,
             width: 1,
-            height: 1
-          }
-        )
+            height: 1,
+          },
+        ),
       ).toBe(true);
 
       expect(
@@ -111,15 +111,15 @@ describe('boxes utils', () => {
             left: 3,
             top: 1,
             width: 1,
-            height: 1
+            height: 1,
           },
           {
             left: 1,
             top: 0,
             width: 4,
-            height: 4
-          }
-        )
+            height: 4,
+          },
+        ),
       ).toBe(true);
     });
 
@@ -130,15 +130,15 @@ describe('boxes utils', () => {
             left: 0,
             top: 0,
             width: 20,
-            height: 20
+            height: 20,
           },
           {
             left: 30,
             top: 0,
             width: 20,
-            height: 20
-          }
-        )
+            height: 20,
+          },
+        ),
       ).toBe(false);
     });
   });
@@ -149,7 +149,7 @@ describe('boxes utils', () => {
         left: 2,
         top: 3,
         height: 4,
-        width: 5
+        width: 5,
       });
 
       expect(area).toBe(20);

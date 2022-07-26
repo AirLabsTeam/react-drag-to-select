@@ -1,21 +1,13 @@
 import React, { ReactElement, useCallback, useRef } from 'react';
-import {
-  MouseSelection,
-  MouseSelectionProps
-} from '../components/SelectionContainer';
+import { MouseSelection, MouseSelectionProps } from '../components/SelectionContainer';
 import { MouseSelectionRef } from '../utils/types';
-import {
-  useSelectionLogic,
-  UseSelectionLogicParams
-} from './useSelectionLogic';
+import { useSelectionLogic, UseSelectionLogicParams } from './useSelectionLogic';
 
 export interface UseSelectionContainerResult {
   /**
    * method to cancel current selecting
    */
-  cancelCurrentSelection: ReturnType<
-    typeof useSelectionLogic
-  >['cancelCurrentSelection'];
+  cancelCurrentSelection: ReturnType<typeof useSelectionLogic>['cancelCurrentSelection'];
   /**
    * ReactNode which displays mouse selection. It should be rendered at the top of container of elements we want to select
    */
@@ -25,11 +17,7 @@ export interface UseSelectionContainerResult {
 export interface UseSelectionContainerParams<T extends HTMLElement>
   extends Pick<
     UseSelectionLogicParams<T>,
-    | 'onSelectionChange'
-    | 'onSelectionEnd'
-    | 'onSelectionStart'
-    | 'isEnabled'
-    | 'eventsElement'
+    'onSelectionChange' | 'onSelectionEnd' | 'onSelectionStart' | 'isEnabled' | 'eventsElement'
   > {
   /** These are props that get passed to the selection box component (where styling gets passed in) */
   selectionProps?: MouseSelectionProps;
@@ -45,7 +33,7 @@ export function useSelectionContainer<T extends HTMLElement>({
   onSelectionStart,
   isEnabled = true,
   selectionProps = {},
-  eventsElement
+  eventsElement,
 }: UseSelectionContainerParams<T>): UseSelectionContainerResult {
   const containerRef = useRef<MouseSelectionRef>(null);
 
@@ -55,16 +43,13 @@ export function useSelectionContainer<T extends HTMLElement>({
     onSelectionStart,
     onSelectionChange,
     isEnabled,
-    eventsElement
+    eventsElement,
   });
 
-  const DragSelection = useCallback(
-    () => <MouseSelection ref={containerRef} {...selectionProps} />,
-    []
-  );
+  const DragSelection = useCallback(() => <MouseSelection ref={containerRef} {...selectionProps} />, []);
 
   return {
     cancelCurrentSelection,
-    DragSelection
+    DragSelection,
   };
 }
