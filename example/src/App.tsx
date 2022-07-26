@@ -1,24 +1,86 @@
-import React from 'react';
-import logo from './logo.svg';
+import  { useCallback, useEffect, useRef, useState } from 'react';
 import './App.css';
+import { Box, boxesIntersect, useSelectionContainer } from '@air/react-drag-to-select';
 
 function App() {
+  const [selectionBox, setSelectionBox] = useState<Box>();
+  const [selectedIndexes, setSelectedIndexes] = useState<number[]>([]);
+  const selectableItems = useRef<Box[]>([]);
+  const elementsContainerRef = useRef<HTMLDivElement | null>(null);
+
+  const onSelectionChange = useCallback(
+    (box: Box) => {
+      /**
+       * Here we make sure to adjust the box's left and top with the scroll position of the window 
+       * @see https://github.com/AirLabsTeam/react-drag-to-select/#scrolling
+       */
+      const scrollAwareBox: Box = {
+        ...box,
+        top: box.top + window.scrollY,
+        left: box.left + window.scrollX
+      }
+
+      setSelectionBox(scrollAwareBox);
+      const indexesToSelect: number[] = [];
+      selectableItems.current.forEach((item, index) => {
+        if (boxesIntersect(scrollAwareBox, item)) {
+          indexesToSelect.push(index);
+        }
+      });
+
+      setSelectedIndexes(indexesToSelect);
+    },
+    [selectableItems],
+  );
+
+  const { DragSelection } = useSelectionContainer({
+    eventsElement: document.getElementById('root'),
+    onSelectionChange,
+    onSelectionStart: () => {
+      console.log('OnSelectionStart');
+    },
+    onSelectionEnd: () => console.log('OnSelectionEnd'),
+    selectionProps: {
+      style: {
+        border: '2px dashed purple',
+        borderRadius: 4,
+        backgroundColor: 'brown',
+        opacity: 0.5,
+      },
+    },
+  });
+
+  useEffect(() => {
+  
+    if (elementsContainerRef.current) {
+      Array.from(elementsContainerRef.current.children).forEach((item) => {
+        const { left, top, width, height } = item.getBoundingClientRect();
+        selectableItems.current.push({
+          left,
+          top,
+          width,
+          height,
+        });
+      });
+    }
+  }, []);
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container">
+      <DragSelection />
+      <div id="elements-container" className="elements-container" ref={elementsContainerRef}>
+        {Array.from({ length: 16 }, (_, i) => (
+          <div data-testid={`grid-cell-${i}`} key={i} className={`element ${selectedIndexes.includes(i) ? 'selected' : ''} `} />
+        ))}
+      </div>
+
+      <div className="selection-box-info">
+        Selection Box:
+        <div>top: {selectionBox?.top || ''}</div>
+        <div>left: {selectionBox?.left || ''}</div>
+        <div>width: {selectionBox?.width || ''}</div>
+        <div>height: {selectionBox?.height || ''}</div>
+      </div>
     </div>
   );
 }
