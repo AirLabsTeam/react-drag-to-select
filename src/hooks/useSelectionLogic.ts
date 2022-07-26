@@ -163,7 +163,6 @@ export function useSelectionLogic<T extends HTMLElement>({
     (e: Event) => {
       // handle only left button click
       if ((e as MouseEvent).button === 0 && isEnabledRef.current) {
-        // @ts-ignore
         // if user clicked on element which is draggable (so it might be start of drag event), ignore it
         const isDisabled = isSelectionDisabled(e.target as HTMLElement);
         if (isDisabled) {

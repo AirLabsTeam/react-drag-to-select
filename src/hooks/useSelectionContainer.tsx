@@ -1,5 +1,5 @@
 import React, { ReactElement, useCallback, useRef } from 'react';
-import MouseSelection, { MouseSelectionProps } from '../components/SelectionContainer';
+import { MouseSelection, MouseSelectionProps } from '../components/SelectionContainer';
 import { MouseSelectionRef } from '../utils/types';
 import { useSelectionLogic, UseSelectionLogicParams } from './useSelectionLogic';
 

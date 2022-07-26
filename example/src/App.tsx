@@ -1,7 +1,8 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import  { useCallback, useEffect, useRef, useState } from 'react';
+import './App.css';
 import { Box, boxesIntersect, useSelectionContainer } from '@air/react-drag-to-select';
 
-const App = () => {
+function App() {
   const [selectionBox, setSelectionBox] = useState<Box>();
   const [selectedIndexes, setSelectedIndexes] = useState<number[]>([]);
   const selectableItems = useRef<Box[]>([]);
@@ -63,14 +64,13 @@ const App = () => {
       });
     }
   }, []);
-
   
   return (
     <div className="container">
       <DragSelection />
       <div id="elements-container" className="elements-container" ref={elementsContainerRef}>
         {Array.from({ length: 16 }, (_, i) => (
-          <div key={i} className={`element ${selectedIndexes.includes(i) ? 'selected' : ''} `} />
+          <div data-testid={`grid-cell-${i}`} key={i} className={`element ${selectedIndexes.includes(i) ? 'selected' : ''} `} />
         ))}
       </div>
 
@@ -83,6 +83,6 @@ const App = () => {
       </div>
     </div>
   );
-};
+}
 
 export default App;

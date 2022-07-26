@@ -22,3 +22,9 @@ yarn-debug.log*
 yarn-error.log*
 
 .idea
+
+# package testing
+.yalc
+
+# tests
+coverage
