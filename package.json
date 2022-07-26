@@ -23,10 +23,12 @@
     "ci:start-example": "cd example; npm start",
     "cypress": "npx cypress open"
   },
+  "dependencies": {
+    "react-style-object-to-css": "^1.1.2"
+  },
   "peerDependencies": {
     "react": "16 - 18",
-    "react-dom": "16 - 18",
-    "react-style-object-to-css": "^1.1.2"
+    "react-dom": "16 - 18"
   },
   "devDependencies": {
     "@types/jest": "^28.1.6",
