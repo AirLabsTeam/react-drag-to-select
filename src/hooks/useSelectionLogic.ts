@@ -1,10 +1,5 @@
 import { RefObject, useCallback, useEffect, useRef } from 'react';
-import {
-  MouseSelectionRef,
-  OnSelectionChange,
-  Point,
-  SelectionBox
-} from '../utils/types';
+import { MouseSelectionRef, OnSelectionChange, Point, SelectionBox } from '../utils/types';
 import { calculateBoxArea, calculateSelectionBox } from '../utils/boxes';
 import { isSelectionDisabled } from '../utils/utils';
 
@@ -37,7 +32,7 @@ export function useSelectionLogic<T extends HTMLElement>({
   onSelectionStart,
   onSelectionEnd,
   isEnabled = true,
-  eventsElement = typeof window !== 'undefined' ? window : undefined
+  eventsElement = typeof window !== 'undefined' ? window : undefined,
 }: UseSelectionLogicParams<T>): UseSelectionLogicResult {
   const startPoint = useRef<null | Point>(null);
   const endPoint = useRef<null | Point>(null);
@@ -56,7 +51,7 @@ export function useSelectionLogic<T extends HTMLElement>({
         onSelectionChange(box);
       });
     },
-    [onSelectionChange]
+    [onSelectionChange],
   );
   currentSelectionStart.current = onSelectionStart;
   currentSelectionEnd.current = onSelectionEnd;
@@ -89,10 +84,10 @@ export function useSelectionLogic<T extends HTMLElement>({
 
       return {
         x: event.clientX - (rect?.left || 0),
-        y: event.clientY - (rect?.top || 0)
+        y: event.clientY - (rect?.top || 0),
       };
     },
-    [containerRef]
+    [containerRef],
   );
 
   /**
@@ -106,14 +101,14 @@ export function useSelectionLogic<T extends HTMLElement>({
         }
         const newSelectionBox = calculateSelectionBox({
           startPoint: startPoint.current,
-          endPoint: endPoint.current
+          endPoint: endPoint.current,
         });
 
         // calculate box in context of container to compare with items' coordinates
         const boxInContainer: SelectionBox = {
           ...newSelectionBox,
           top: newSelectionBox.top + (rect?.top || 0),
-          left: newSelectionBox.left + (rect?.left || 0)
+          left: newSelectionBox.left + (rect?.left || 0),
         };
 
         // we detect move only after some small movement
@@ -133,7 +128,7 @@ export function useSelectionLogic<T extends HTMLElement>({
         cancelCurrentSelection();
       }
     },
-    [cancelCurrentSelection, containerRef]
+    [cancelCurrentSelection, containerRef],
   );
 
   const onMouseMove = useCallback(
@@ -146,7 +141,7 @@ export function useSelectionLogic<T extends HTMLElement>({
       endPoint.current = getPointFromEvent(e as MouseEvent, rect);
       handleMouseMove(rect);
     },
-    [handleMouseMove, getPointFromEvent, containerRef]
+    [handleMouseMove, getPointFromEvent, containerRef],
   );
 
   const onMouseUp = useCallback(
@@ -161,7 +156,7 @@ export function useSelectionLogic<T extends HTMLElement>({
         window?.removeEventListener('mouseup', onMouseUp);
       }
     },
-    [eventsElement, cancelCurrentSelection, onMouseMove]
+    [eventsElement, cancelCurrentSelection, onMouseMove],
   );
 
   const onMouseDown = useCallback(
@@ -183,7 +178,7 @@ export function useSelectionLogic<T extends HTMLElement>({
         window?.addEventListener('mouseup', onMouseUp);
       }
     },
-    [eventsElement, getPointFromEvent, onMouseMove, onMouseUp]
+    [eventsElement, getPointFromEvent, onMouseMove, onMouseUp],
   );
 
   useEffect(() => {
@@ -197,6 +192,6 @@ export function useSelectionLogic<T extends HTMLElement>({
   }, [eventsElement, onMouseDown, onMouseMove, onMouseUp]);
 
   return {
-    cancelCurrentSelection
+    cancelCurrentSelection,
   };
 }

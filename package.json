@@ -20,7 +20,7 @@
     "dev": "microbundle watch",
     "pretty": "prettier --config .prettierrc 'src/**/*.(ts|tsx)' --write",
     "test": "jest",
-    "start-example": "cd example; npm start"
+    "cypress": "npx cypress open"
   },
   "peerDependencies": {
     "react": "16 - 18",
