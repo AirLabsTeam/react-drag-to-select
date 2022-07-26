@@ -9,7 +9,6 @@ describe('react-drag-to-select example', () => {
     cy.get('.container')
       .trigger('mousedown', 10, 10, {
         eventConstructor: 'MouseEvent',
-        button: 0,
       })
       .trigger('mousemove', 400, 150, {        
         eventConstructor: 'MouseEvent',
@@ -33,7 +32,6 @@ describe('react-drag-to-select example', () => {
     cy.get('.container', { force: true })
       .trigger('mousedown', 10, 320, {
         eventConstructor: 'MouseEvent',
-        button: 0,
         force: true
       })
       .trigger('mousemove', 320, 325, {
