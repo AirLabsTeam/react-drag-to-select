@@ -40,5 +40,5 @@ jobs:
         uses: cypress-io/github-action@v4
         with:
           browser: chrome
-          start: cd example; npm start
+          start: npm run ci:start-example
           wait-on: 'http://localhost:3000'
