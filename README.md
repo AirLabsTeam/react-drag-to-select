@@ -104,7 +104,7 @@ See the [`onSelectionChange` in the example](https://github.com/AirLabsTeam/reac
 
 ## Used by
 
-- [<img src="./example/assets/airLogo.png" width="50"/>](https://air.inc/home)
+- [<img src="./example/assets/air.png" width="50 height="25"/>](https://air.inc)
 
 ## License
 
