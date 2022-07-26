@@ -1,9 +1,13 @@
+<p align="center">
+  <img src="example/assets/chrome-capture.gif">
+</p>
+
 # react-drag-to-select
 
 A highly-perfomant React library which adds drag-to-select to your app
 
-[![NPM](https://img.shields.io/npm/v/react-drag-to-select.svg)](https://www.npmjs.com/package/@air/react-drag-to-select) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
-
+[![NPM](https://img.shields.io/npm/v/@air/react-drag-to-select?color=2E77FF)](https://www.npmjs.com/package/@air/react-drag-to-select)
+![MIT License](https://img.shields.io/npm/l/@air/react-drag-to-select?color=41C300)
 
 ## Install
 
@@ -12,7 +16,7 @@ npm install --save @air/react-drag-to-select
 ```
 ## Usage
 
-![Example](example/assets/chrome-capture.gif)
+
 
 Check out this codesandbox for a complete working example: https://codesandbox.io/s/billowing-lake-rzhid4
 
@@ -106,6 +110,3 @@ See the [`onSelectionChange` in the example](https://github.com/AirLabsTeam/reac
 
 [<img src="./example/assets/air.png" height="25" width="50">]([http://google.com.au/](https://air.inc))
 
-## License
-
-MIT © [Air](https://github.com/AirLabsTeam)
