@@ -1,7 +1,4 @@
-import {
-  boxesIntersect,
-  calculateBoxArea
-} from 'react-drag-and-select/utils/boxes';
+import { boxesIntersect, calculateBoxArea } from '../boxes';
 
 describe('boxes utils', () => {
   describe('boxesIntersect', () => {
