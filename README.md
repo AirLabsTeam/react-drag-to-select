@@ -7,7 +7,7 @@ A highly-perfomant React library which adds drag-to-select to your app
 ## Install
 
 ```bash
-npm install --save @air/react-drag-to-select react-style-object-to-css
+npm install --save @air/react-drag-to-select
 ```
 ## Usage
 
