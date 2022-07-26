@@ -14,10 +14,7 @@ describe('react-drag-to-select example', () => {
       .trigger('mousemove', 400, 150, {        
         eventConstructor: 'MouseEvent',
       })
-      .trigger('mouseup', 400, 150, {
-        eventConstructor: 'MouseEvent',
-        button: 0,
-      });
+      .trigger('mouseup');
 
     for (let index = 0; index < 16; index++) {
       if (index < 3) {
@@ -43,12 +40,7 @@ describe('react-drag-to-select example', () => {
         eventConstructor: 'MouseEvent',
         force: true
       })
-      // TODO: figure out why this breaks the test.
-      // .trigger('mouseup', 320, 325, {
-      //   eventConstructor: 'MouseEvent',
-      //   button: 0,
-      //   force: true
-      // })
+      .trigger('mouseup')
 
       for (let index = 0; index < 16; index++) {
         if (index > 7 && index < 11) {
