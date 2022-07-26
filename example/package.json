@@ -12,11 +12,13 @@
     "@types/react": "^18.0.15",
     "@types/react-dom": "^18.0.6",
     "react": "file:../node_modules/react",
-    "react-dom": "file:../node_modules/react-dom",
-    "react-scripts": "5.0.1",
+    "react-dom": "file:../node_modules/react-dom",    
     "react-style-object-to-css": "file:../node_modules/react-style-object-to-css",
     "typescript": "^4.7.4",
     "web-vitals": "^2.1.4"
+  },
+  "devDependencies": {
+    "react-scripts": "5.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
