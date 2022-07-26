@@ -4,6 +4,7 @@ A highly-perfomant React library which adds drag-to-select to your app
 
 [![NPM](https://img.shields.io/npm/v/react-drag-to-select.svg)](https://www.npmjs.com/package/@air/react-drag-to-select) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
+
 ## Install
 
 ```bash
