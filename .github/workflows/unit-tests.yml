@@ -1,7 +1,7 @@
-name: Unit tests
+name: Tests
 on: [push]
 jobs:
-  Explore-GitHub-Actions:
+  unit-tests:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository code
@@ -19,5 +19,5 @@ jobs:
       - name: Install dependencies
         if: steps.cache.outputs.cache-hit != 'true'
         run: npm ci --ignore-scripts
-        
+
       - run: npm run test

@@ -19,7 +19,8 @@
     "build": "microbundle",
     "dev": "microbundle watch",
     "pretty": "prettier --config .prettierrc 'src/**/*.(ts|tsx)' --write",
-    "test": "jest"
+    "test": "jest",
+    "start-example": "cd example; npm start"
   },
   "peerDependencies": {
     "react": "16 - 18",
