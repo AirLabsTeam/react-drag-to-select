@@ -16,6 +16,8 @@ jobs:
         run: |
           git config user.email "dwilt4rville@gmail.com"
           git config user.name "Dan Wilt"
+      - run: npm version ${{ github.event.inputs.version }} -m "Release ${{ github.event.inputs.version }} 📣"
+      - run: git push
       - run: npm ci
       - run: npm publish --access public
         env:
