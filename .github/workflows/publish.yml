@@ -19,7 +19,13 @@ jobs:
           git config user.email "dwilt4rville@gmail.com"
           git config user.name "Dan Wilt"
       - run: npm version ${{ github.event.release.tag_name }} -m "Release ${{ github.event.release.tag_name }} 📣"
-      - run: git push
+      - name: Push version to main
+        uses: CasperWA/push-protected@v2
+        with:
+          token: ${{ secrets.DWILT_PAT_FOR_PUSHING_PROTECTED_BRANCH }}
+          branch: main
+          unprotect_reviews: true
+
       - run: npm ci
       - run: npm publish --access public
         env:
