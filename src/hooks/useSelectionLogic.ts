@@ -1,5 +1,5 @@
 import { RefObject, useCallback, useEffect, useRef } from 'react';
-import { MouseSelectionRef, OnSelectionChange, Point, SelectionBox } from '../utils/types';
+import { SelectionContainerRef, OnSelectionChange, Point, SelectionBox } from '../utils/types';
 import { calculateBoxArea, calculateSelectionBox } from '../utils/boxes';
 import { isSelectionDisabled } from '../utils/utils';
 
@@ -19,7 +19,7 @@ export interface UseSelectionLogicParams<T extends HTMLElement> {
   /** This is an HTML element that the mouse events (mousedown, mouseup, mousemove) should be attached to. Defaults to the window */
   eventsElement?: Window | T | null;
   /** This is the ref of the parent of the selection box  */
-  containerRef: RefObject<MouseSelectionRef>;
+  containerRef: RefObject<SelectionContainerRef>;
 }
 
 /**
