@@ -25,7 +25,7 @@ jobs:
           token: ${{ secrets.DWILT_PAT_FOR_PUSHING_PROTECTED_BRANCH }}
           branch: main
           unprotect_reviews: true
-
+      - run: npm run build
       - run: npm ci
       - run: npm publish --access public
         env:
