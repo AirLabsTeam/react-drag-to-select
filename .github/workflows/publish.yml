@@ -25,6 +25,18 @@ jobs:
           token: ${{ secrets.DWILT_PAT_FOR_PUSHING_PROTECTED_BRANCH }}
           branch: main
           unprotect_reviews: true
+
+      - name: Cache root dependencies
+        id: root-cache
+        uses: actions/cache@v3
+        with:
+          path: ./node_modules
+          key: modules-${{ hashFiles('package-lock.json') }}
+
+      - name: Install root dependencies
+        if: steps.root-cache.outputs.cache-hit != 'true'
+
+        run: npm ci --ignore-scripts
       - run: npm run build
       - run: npm ci
       - run: npm publish --access public
