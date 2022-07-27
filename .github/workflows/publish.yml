@@ -7,6 +7,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+        with:
+          ref: main
       - uses: actions/setup-node@v3
         with:
           node-version: '16.x'
@@ -16,7 +18,7 @@ jobs:
         run: |
           git config user.email "dwilt4rville@gmail.com"
           git config user.name "Dan Wilt"
-      - run: npm version ${{ github.event.inputs.version }} -m "Release ${{ github.event.inputs.version }} 📣"
+      - run: npm version ${{ github.event.release.tag_name }} -m "Release ${{ github.event.release.tag_name }} 📣"
       - run: git push
       - run: npm ci
       - run: npm publish --access public
