@@ -14,7 +14,7 @@ export interface SelectionBox extends Box {}
 
 export type OnSelectionChange = (box: SelectionBox) => void;
 
-export interface MouseSelectionRef {
+export interface SelectionContainerRef {
   drawSelectionBox: OnSelectionChange;
   clearSelectionBox: () => void;
   getBoundingClientRect: () => DOMRect | undefined;
