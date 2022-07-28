@@ -26,7 +26,7 @@ Check out this codesandbox for a complete working example: https://codesandbox.i
 
 const App = () => {
 
-  const handleSelectionChange = useCallback((box: Box) => {
+  const onSelectionChange = useCallback((box: Box) => {
     console.log(box);
   },[])
 
