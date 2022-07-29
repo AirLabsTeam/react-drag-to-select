@@ -26,7 +26,7 @@ Check out this codesandbox for a complete working example: https://codesandbox.i
 
 const App = () => {
 
-  const onSelectionChange = useCallback((box: Box) => {
+  const onSelectionChange = useCallback((selectionBox: Box) => {
     console.log(box);
   },[])
 
@@ -35,7 +35,7 @@ const App = () => {
   });
 
   return (
-    <div id='root'>
+    <div>
       <DragSelection/>
       <div>Selectable element</div>
     </div>
