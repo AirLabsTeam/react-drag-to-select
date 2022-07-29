@@ -23,6 +23,8 @@ npm install --save @air/react-drag-to-select
 Check out this codesandbox for a complete working example: https://codesandbox.io/s/billowing-lake-rzhid4
 
 ```tsx
+import { useCallback } from "react";
+import { Box, useSelectionContainer } from '@air/react-drag-to-select'
 
 const App = () => {
 
@@ -48,7 +50,7 @@ const App = () => {
 2. Render `<DragSelection/>` somewhere in code
 3. That's it! Mouse selection will appear, when you click and drag within window or element passed in `eventsElement`.
 
-This library will not select your items. You have to handle selection yourself in `onSelectionChange` method (see example). You can use `boxesIntersects(boxA, boxB)` method to check if element intersetcs with selection.
+**NOTE**: This library will not select your items. You have to handle selection yourself in `onSelectionChange` method ([see example](https://codesandbox.io/s/billowing-lake-rzhid4)). You can use `boxesIntersects(boxA, boxB)` method to check if element intersetcs with selection.
 
 
 ## useSelectionContainer arguments
