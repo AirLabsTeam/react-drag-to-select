@@ -114,7 +114,7 @@ Sometimes you want to disable a user being able to start selecting in a certain 
 
 Because we use the mouse position to calculate the selection box's coordinates, if your `<DragSelection />` is inside of an area that scrolls, you'll need to make some adjustments on your end. Our library can't inherently know which parent is being scrolled nor of it's position inside of the scrolling parent (if there are other sibling elements above it).
 
-How this is solved on your end is modifiying the `left` (for horizontal scrolling) and `top` (for vertical scrolling) of the `selectionBox` that is passed to `handleSelectionChange`. See the [`onSelectionChange` in the example](https://github.com/AirLabsTeam/react-drag-to-select/blob/main/example/src/App.tsx#L10) for an idea of how to do this.
+How this is solved on your end is modifiying the `left` (for horizontal scrolling) and `top` (for vertical scrolling) of the `selectionBox` that is passed to `handleSelectionChange`. See the [`onSelectionChange` in the example](https://github.com/AirLabsTeam/react-drag-to-select/blob/main/example/src/App.tsx#L20) for an idea of how to do this.
 
 ## Used by
 
