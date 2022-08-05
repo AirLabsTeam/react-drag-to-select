@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="example/assets/chrome-capture.gif">
+  <img src="example/assets/example.gif">
 </p>
 
 <h1 align="center">React drag-to-select</h1>
