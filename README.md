@@ -96,7 +96,7 @@ To style your selection, pass `selectionProps: { style }` prop:
 ```
 
 The default style is
-```
+```ts
 {
   border: '1px solid #4C85D8',
   background: 'rgba(155, 193, 239, 0.4)',
