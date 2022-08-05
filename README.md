@@ -33,17 +33,11 @@ yarn add @air/react-drag-to-select
 
 ## Usage
 
-Check out this codesandbox for a complete working example: https://codesandbox.io/s/billowing-lake-rzhid4
-
 ```tsx
 import { useSelectionContainer } from '@air/react-drag-to-select'
 
 const App = () => {
-  const { DragSelection } = useSelectionContainer({
-    onSelectionChange: (selectionBox) => {
-      console.log('selectionBox >> ', selectionBox);
-    },
-  });
+  const { DragSelection } = useSelectionContainer();
 
   return (
     <div>
@@ -54,6 +48,8 @@ const App = () => {
 }
 
 ```
+
+Check out this codesandbox for a complete working example: https://codesandbox.io/s/billowing-lake-rzhid4
 
 ## useSelectionContainer arguments
 
