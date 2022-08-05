@@ -1,5 +1,5 @@
 import { RefObject, useCallback, useEffect, useRef } from 'react';
-import { SelectionContainerRef, OnSelectionChange, Point, SelectionBox } from '../utils/types';
+import { SelectionContainerRef, OnSelectionChange, Point, SelectionBox, Box } from '../utils/types';
 import { calculateBoxArea, calculateSelectionBox } from '../utils/boxes';
 import { isSelectionDisabled } from '../utils/utils';
 
@@ -13,7 +13,7 @@ export interface UseSelectionLogicParams<T extends HTMLElement> {
   /** This callback will fire when the user finishes selecting */
   onSelectionEnd?: () => void;
   /** This callback will fire when the user's mouse changes position while selecting using requestAnimationFrame */
-  onSelectionChange: OnSelectionChange;
+  onSelectionChange?: OnSelectionChange;
   /** This boolean enables selecting  */
   isEnabled?: boolean;
   /** This is an HTML element that the mouse events (mousedown, mouseup, mousemove) should be attached to. Defaults to the window */
@@ -46,10 +46,12 @@ export function useSelectionLogic<T extends HTMLElement>({
   const isEnabledRef = useRef(isEnabled);
 
   currentSelectionChange.current = useCallback(
-    (box) => {
-      onChangeRefId.current = requestAnimationFrame(() => {
-        onSelectionChange(box);
-      });
+    (box: Box) => {
+      onChangeRefId.current = onSelectionChange
+        ? requestAnimationFrame(() => {
+            onSelectionChange(box);
+          })
+        : undefined;
     },
     [onSelectionChange],
   );
@@ -120,9 +122,9 @@ export function useSelectionLogic<T extends HTMLElement>({
             isSelecting.current = true;
           }
           containerRef.current?.drawSelectionBox(newSelectionBox);
-          currentSelectionChange.current(boxInContainer);
+          currentSelectionChange.current?.(boxInContainer);
         } else if (isSelecting) {
-          currentSelectionChange.current(boxInContainer);
+          currentSelectionChange.current?.(boxInContainer);
         }
       } else {
         cancelCurrentSelection();
