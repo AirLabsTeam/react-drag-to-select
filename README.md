@@ -40,7 +40,9 @@ import { useSelectionContainer } from '@air/react-drag-to-select'
 
 const App = () => {
   const { DragSelection } = useSelectionContainer({
-    onSelectionChange,
+    onSelectionChange: (selectionBox) => {
+      console.log('selectionBox >> ', selectionBox);
+    },
   });
 
   return (
