@@ -98,9 +98,15 @@ The default style is
 
 Sometimes you want to disable a user being able to start selecting in a certain area. You can use `data-disableSelect` to enable/disable the ability for a user to start a selection in the area that element takes up. See full example here: https://codesandbox.io/s/exciting-rubin-xxf6r0
 
-```html
-<div data-disableSelect={true}>
-...
+```tsx
+<div>
+  <DragSelection />
+  <div className="non-selectable-area" data-disableSelect={true}>
+    non-selectable area
+    <div className="selectable-area" data-disableSelect={false}>
+      selectable area
+    </div>
+  </div>
 </div>
 ```
 
