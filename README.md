@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="example/assets/example.gif">
+  <img style='width: 400px' src="example/assets/example.gif">
 </p>
 
 <h1 align="center">React drag-to-select</h1>
@@ -55,23 +55,16 @@ const App = () => {
 
 ```
 
-1. Add `useSelectionContainer` hook to your component and pass `onSelectionChange` handler
-2. Render `<DragSelection/>` somewhere in code
-3. That's it! Mouse selection will appear, when you click and drag within window or element passed in `eventsElement`.
-
-**NOTE**: This library will not select your items. You have to handle selection yourself in `onSelectionChange` method ([see example](https://codesandbox.io/s/billowing-lake-rzhid4)). You can use `boxesIntersects(boxA, boxB)` method to check if element intersetcs with selection.
-
-
 ## useSelectionContainer arguments
 
 |Name|Required|Type|Default|Description|
 |----|--------|----|-------|-----------|
-|onSelectionStart|No|() => void||Method called when selection starts (mouse is down and moved)|
-|onSelectionEnd|No|() => void||Method called when selection ends (mouse is up)
-|onSelectionChange|Yes|(box: Box) => void||Method called when selection moves|
-|isEnabled|No|boolean|true|If false, selection does not fire|
-|eventsElement|No|Window, HTMLElement or null|window|Element to listen mouse events|
-|selectionProps|No|React.HTMLAttributes||Props of selection - you can pass style here as shown below|
+|`onSelectionStart`|No|() => void||Method called when selection starts (mouse is down and moved)|
+|`onSelectionEnd`|No|() => void||Method called when selection ends (mouse is up)
+|`onSelectionChange`|Yes|(box: Box) => void||Method called when selection moves|
+|`isEnabled`|No|boolean|`true`|If false, selection does not fire|
+|`eventsElement`|No|Window, HTMLElement or null|`window`|Element to listen mouse events|
+|`selectionProps`|No|React.HTMLAttributes||Props of selection - you can pass style here as shown below|
 
 ## Selection styling
 
@@ -101,12 +94,16 @@ The default style is
 }
 ```
 
-## Disabling selection on elements
+## Disabling selecting in certain areas
 
-To prevent starting selection, add `data-disableSelect` to element:
+<p align="center">
+  <img style='width: 400px' src="example/assets/disable-select-example.gif">
+</p>
+
+Sometimes you want to disable a user being able to start selecting in a certain area. You can use `data-disableSelect` to enable/disable the ability for a user to start a selection in the area that element takes up. See full example here: https://codesandbox.io/s/exciting-rubin-xxf6r0
 
 ```html
-<div data-disableSelect=true>
+<div data-disableSelect={true}>
 ...
 </div>
 ```
