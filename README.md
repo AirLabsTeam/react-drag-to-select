@@ -36,15 +36,9 @@ yarn add @air/react-drag-to-select
 Check out this codesandbox for a complete working example: https://codesandbox.io/s/billowing-lake-rzhid4
 
 ```tsx
-import { useCallback } from "react";
-import { Box, useSelectionContainer } from '@air/react-drag-to-select'
+import { useSelectionContainer } from '@air/react-drag-to-select'
 
 const App = () => {
-
-  const onSelectionChange = useCallback((selectionBox: Box) => {
-    console.log(box);
-  },[])
-
   const { DragSelection } = useSelectionContainer({
     onSelectionChange,
   });
@@ -117,11 +111,9 @@ To prevent starting selection, add `data-disableSelect` to element:
 
 ## Scrolling
 
-Because we use the mouse position so heavily, if your `<DragSelection />` is inside of an area that scrolls (and honestly, what scenario would that not happen in?), you need to handle the logic on your side to make this work. The reason why we force you to do this, instead of building it into the library, is because it would make our code overly complex (and most likely not work right anyway). 
+Because we use the mouse position to calculate the selection box's coordinates, if your `<DragSelection />` is inside of an area that scrolls, you'll need to make some adjustments on your end. Our library can't inherently know which parent is being scrolled nor of it's position inside of the scrolling parent (if there are other sibling elements above it).
 
-If the `<DragSelection />` is inside of a scroll container, the library can't inherently know which parent it's scrolled inside of nor it's position inside of the parent (if there are other sibling elements above it). How this is solved on your end will be modifiying the `left` (for horizontal scrolling) and `top` (for vertical scrolling) by adding the scroll offset of the parent to the the `box: Box` that is used in `handleSelectionChange`. 
-
-See the [`onSelectionChange` in the example](https://github.com/AirLabsTeam/react-drag-to-select/blob/main/example/src/App.tsx#L10) for an idea of how to do this.
+How this is solved on your end is modifiying the `left` (for horizontal scrolling) and `top` (for vertical scrolling) of the `selectionBox` that is passed to `handleSelectionChange`. See the [`onSelectionChange` in the example](https://github.com/AirLabsTeam/react-drag-to-select/blob/main/example/src/App.tsx#L10) for an idea of how to do this.
 
 ## Used by
 
