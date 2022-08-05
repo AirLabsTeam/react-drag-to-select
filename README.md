@@ -20,7 +20,7 @@
 - Simple API. It doesn't actually select items; just draws the selection box and passes you coordinates so you can determine that (we provided a utility to help though)
 - Fully built in TypeScript
 - Unit and e2e tested
-- Battle-tested in performance-intense situations
+- Battle-tested in production-scale applications
 
 ## Install
 
