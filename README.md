@@ -6,27 +6,42 @@
 <p align="center"><i>A highly-performant React library which adds drag-to-select to your app.</i></p>
 
 <p align="center">
-  <img alt="e2e" src="https://github.com/AirLabsTeam/react-drag-to-select/actions/workflows/e2e-tests.yml/badge.svg" />
-  <img alt="unit" src="https://github.com/AirLabsTeam/react-drag-to-select/actions/workflows/unit-tests.yml/badge.svg" />
   <a href="https://www.npmjs.com/package/@air/react-drag-to-select">
     <img src="https://img.shields.io/npm/v/@air/react-drag-to-select?color=2E77FF" alt="size" />
   </a>
+  <img alt="e2e" src="https://github.com/AirLabsTeam/react-drag-to-select/actions/workflows/e2e-tests.yml/badge.svg" />
+  <img alt="unit" src="https://github.com/AirLabsTeam/react-drag-to-select/actions/workflows/unit-tests.yml/badge.svg" />  
+  <img alt="size" src="https://img.shields.io/bundlephobia/min/@air/react-drag-to-select" />
 </p>
+
+## ✨ Features <a name="features"></a>
+
+- Tested thoroughly in 6x CPU slowdown for optimal performance
+- Simple API. It doesn't actually select items; just draws the selection box and passes you coordinates so you can determine that (we provided a utility to help though)
+- Fully built in TypeScript
+- Unit and e2e tested
+- Battle-tested in performance-intense situations
 
 ## Install
 
 ```bash
 npm install --save @air/react-drag-to-select
 ```
+```bash
+yarn add @air/react-drag-to-select
+```
+
 ## Usage
 
 Check out this codesandbox for a complete working example: https://codesandbox.io/s/billowing-lake-rzhid4
 
 ```tsx
+import { useCallback } from "react";
+import { Box, useSelectionContainer } from '@air/react-drag-to-select'
 
 const App = () => {
 
-  const handleSelectionChange = useCallback((box: Box) => {
+  const onSelectionChange = useCallback((selectionBox: Box) => {
     console.log(box);
   },[])
 
@@ -35,7 +50,7 @@ const App = () => {
   });
 
   return (
-    <div id='root'>
+    <div>
       <DragSelection/>
       <div>Selectable element</div>
     </div>
@@ -48,7 +63,7 @@ const App = () => {
 2. Render `<DragSelection/>` somewhere in code
 3. That's it! Mouse selection will appear, when you click and drag within window or element passed in `eventsElement`.
 
-This library will not select your items. You have to handle selection yourself in `onSelectionChange` method (see example). You can use `boxesIntersects(boxA, boxB)` method to check if element intersetcs with selection.
+**NOTE**: This library will not select your items. You have to handle selection yourself in `onSelectionChange` method ([see example](https://codesandbox.io/s/billowing-lake-rzhid4)). You can use `boxesIntersects(boxA, boxB)` method to check if element intersetcs with selection.
 
 
 ## useSelectionContainer arguments
