@@ -27,14 +27,18 @@ export interface UseSelectionContainerParams<T extends HTMLElement>
  * Use this hook to enable mouse selection on a container.
  * To prevent interfering with drag-n-drop feature, add data-draggable='true' to draggable item. Selection won't fire when click happens on that element
  */
-export function useSelectionContainer<T extends HTMLElement>({
-  onSelectionChange,
-  onSelectionEnd,
-  onSelectionStart,
-  isEnabled = true,
-  selectionProps = {},
-  eventsElement,
-}: UseSelectionContainerParams<T>): UseSelectionContainerResult {
+export function useSelectionContainer<T extends HTMLElement>(
+  props?: UseSelectionContainerParams<T>,
+): UseSelectionContainerResult {
+  const {
+    onSelectionChange,
+    onSelectionEnd,
+    onSelectionStart,
+    isEnabled = true,
+    selectionProps = {},
+    eventsElement,
+  } = props || {};
+
   const containerRef = useRef<SelectionContainerRef>(null);
 
   const { cancelCurrentSelection } = useSelectionLogic({
