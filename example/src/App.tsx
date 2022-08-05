@@ -1,4 +1,4 @@
-import  { useCallback, useEffect, useRef, useState } from 'react';
+import  { useEffect, useRef, useState } from 'react';
 import './App.css';
 import { Box, boxesIntersect, useSelectionContainer } from '@air/react-drag-to-select';
 
@@ -8,13 +8,14 @@ function App() {
   const selectableItems = useRef<Box[]>([]);
   const elementsContainerRef = useRef<HTMLDivElement | null>(null);
 
-  const onSelectionChange = useCallback(
-    (box: Box) => {
+  const { DragSelection } = useSelectionContainer({
+    eventsElement: document.getElementById('root'),
+    onSelectionChange: (box) => {
       /**
        * Here we make sure to adjust the box's left and top with the scroll position of the window 
        * @see https://github.com/AirLabsTeam/react-drag-to-select/#scrolling
        */
-      const scrollAwareBox: Box = {
+      const scrollAwareBox = {
         ...box,
         top: box.top + window.scrollY,
         left: box.left + window.scrollX
@@ -30,12 +31,6 @@ function App() {
 
       setSelectedIndexes(indexesToSelect);
     },
-    [selectableItems],
-  );
-
-  const { DragSelection } = useSelectionContainer({
-    eventsElement: document.getElementById('root'),
-    onSelectionChange,
     onSelectionStart: () => {
       console.log('OnSelectionStart');
     },
