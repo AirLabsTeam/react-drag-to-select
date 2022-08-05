@@ -122,9 +122,9 @@ export function useSelectionLogic<T extends HTMLElement>({
             isSelecting.current = true;
           }
           containerRef.current?.drawSelectionBox(newSelectionBox);
-          currentSelectionChange.current(boxInContainer);
+          currentSelectionChange.current?.(boxInContainer);
         } else if (isSelecting) {
-          currentSelectionChange.current(boxInContainer);
+          currentSelectionChange.current?.(boxInContainer);
         }
       } else {
         cancelCurrentSelection();
