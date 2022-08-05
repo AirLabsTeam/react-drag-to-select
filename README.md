@@ -64,7 +64,7 @@ Check out this codesandbox for a complete working example: https://codesandbox.i
 
 ## Selection styling
 
-To style your selection, pass `selectionProps: { style }` prop:
+To style the selection box, pass `selectionProps: { style }` prop:
 
 ```tsx
   const { DragSelection } = useSelectionContainer({
@@ -80,7 +80,7 @@ To style your selection, pass `selectionProps: { style }` prop:
   });
 ```
 
-The default style is
+The default style for the selection box is
 ```ts
 {
   border: '1px solid #4C85D8',
