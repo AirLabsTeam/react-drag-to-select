@@ -16,7 +16,7 @@
 
 ## ✨ Features <a name="features"></a>
 
-- Tested thoroughly in 6x CPU slowdown for optimal performance
+- 60 fps, tested thoroughly in 6x CPU slowdown for optimal performance
 - Simple API. It doesn't actually select items; just draws the selection box and passes you coordinates so you can determine that (we provided a utility to help though)
 - Fully built in TypeScript
 - Unit and e2e tested
