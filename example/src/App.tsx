@@ -43,7 +43,11 @@ function App() {
         opacity: 0.5,
       },
     },
-    shouldStartSelecting: () => true
+    shouldStartSelecting: (target) => {
+      // do something with target to determine if the user should start selecting
+
+      return true;
+    }
   });
 
   useEffect(() => {
