@@ -173,7 +173,7 @@ export function useSelectionLogic<T extends HTMLElement>({
     (e: Event) => {
       // handle only left button click
       if ((e as MouseEvent).button === 0 && isEnabledRef.current) {
-        if (shouldStartSelecting?.(e.target)) {
+        if (typeof shouldStartSelecting === 'function' && !shouldStartSelecting(e.target)) {
           return;
         }
 
