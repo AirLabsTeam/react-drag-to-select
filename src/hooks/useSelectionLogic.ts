@@ -40,7 +40,7 @@ export function useSelectionLogic<T extends HTMLElement>({
   onSelectionEnd,
   isEnabled = true,
   eventsElement = typeof window !== 'undefined' ? window : undefined,
-  shouldStartSelecting: isElementDisabled,
+  shouldStartSelecting,
 }: UseSelectionLogicParams<T>): UseSelectionLogicResult {
   const startPoint = useRef<null | Point>(null);
   const endPoint = useRef<null | Point>(null);
@@ -173,7 +173,7 @@ export function useSelectionLogic<T extends HTMLElement>({
     (e: Event) => {
       // handle only left button click
       if ((e as MouseEvent).button === 0 && isEnabledRef.current) {
-        if (isElementDisabled?.(e.target)) {
+        if (shouldStartSelecting?.(e.target)) {
           return;
         }
 
