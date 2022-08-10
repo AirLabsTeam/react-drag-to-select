@@ -1,6 +1,6 @@
 {
   "name": "@air/react-drag-to-select",
-  "version": "4.0.0",
+  "version": "5.0.0",
   "description": "A performant React library which adds drag to select to your app",
   "type": "module",
   "author": "Air Labs, Inc.",
