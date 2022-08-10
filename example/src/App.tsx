@@ -43,6 +43,7 @@ function App() {
         opacity: 0.5,
       },
     },
+    shouldStartSelecting: () => true
   });
 
   useEffect(() => {

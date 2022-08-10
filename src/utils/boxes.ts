@@ -10,7 +10,7 @@ export const boxesIntersect = (boxA: Box, boxB: Box) =>
   boxA.top <= boxB.top + boxB.height &&
   boxA.top + boxA.height >= boxB.top;
 
-export const calculateSelectionBox = ({ startPoint, endPoint }: { startPoint: Point; endPoint: Point }) => ({
+export const calculateSelectionBox = ({ startPoint, endPoint }: { startPoint: Point; endPoint: Point }): Box => ({
   left: Math.min(startPoint.x, endPoint.x),
   top: Math.min(startPoint.y, endPoint.y),
   width: Math.abs(startPoint.x - endPoint.x),

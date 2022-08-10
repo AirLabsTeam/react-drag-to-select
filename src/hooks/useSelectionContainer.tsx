@@ -17,7 +17,7 @@ export interface UseSelectionContainerResult {
 export interface UseSelectionContainerParams<T extends HTMLElement>
   extends Pick<
     UseSelectionLogicParams<T>,
-    'onSelectionChange' | 'onSelectionEnd' | 'onSelectionStart' | 'isEnabled' | 'eventsElement'
+    'onSelectionChange' | 'onSelectionEnd' | 'onSelectionStart' | 'isEnabled' | 'eventsElement' | 'shouldStartSelecting'
   > {
   /** These are props that get passed to the selection box component (where styling gets passed in) */
   selectionProps?: SelectionContainerProps;
