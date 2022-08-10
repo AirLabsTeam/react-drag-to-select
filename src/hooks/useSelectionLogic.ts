@@ -1,7 +1,6 @@
 import { RefObject, useCallback, useEffect, useRef } from 'react';
 import { SelectionContainerRef, OnSelectionChange, Point, SelectionBox, Box } from '../utils/types';
 import { calculateBoxArea, calculateSelectionBox } from '../utils/boxes';
-import { isSelectionDisabled } from '../utils/utils';
 
 export interface UseSelectionLogicResult {
   cancelCurrentSelection: () => void;
@@ -20,6 +19,14 @@ export interface UseSelectionLogicParams<T extends HTMLElement> {
   eventsElement?: Window | T | null;
   /** This is the ref of the parent of the selection box  */
   containerRef: RefObject<SelectionContainerRef>;
+  /**
+   * If supplied, this callback is fired on mousedown and can be used to prevent selection from starting.
+   * This is useful when you want to prevent certain areas of your application from being able to be selected.
+   * Returning true will enable selection and returning false will prevent selection from starting.
+   *
+   * @param {EventTarget | null} target - The element the mousedown event fired on when the user started selected
+   */
+  shouldStartSelecting?: (target: EventTarget | null) => boolean;
 }
 
 /**
@@ -33,6 +40,7 @@ export function useSelectionLogic<T extends HTMLElement>({
   onSelectionEnd,
   isEnabled = true,
   eventsElement = typeof window !== 'undefined' ? window : undefined,
+  shouldStartSelecting,
 }: UseSelectionLogicParams<T>): UseSelectionLogicResult {
   const startPoint = useRef<null | Point>(null);
   const endPoint = useRef<null | Point>(null);
@@ -165,9 +173,7 @@ export function useSelectionLogic<T extends HTMLElement>({
     (e: Event) => {
       // handle only left button click
       if ((e as MouseEvent).button === 0 && isEnabledRef.current) {
-        // if user clicked on element which is draggable (so it might be start of drag event), ignore it
-        const isDisabled = isSelectionDisabled(e.target as HTMLElement);
-        if (isDisabled) {
+        if (typeof shouldStartSelecting === 'function' && !shouldStartSelecting(e.target)) {
           return;
         }
 

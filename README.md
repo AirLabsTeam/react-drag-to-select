@@ -55,12 +55,13 @@ Check out this codesandbox for a complete working example: https://codesandbox.i
 
 |Name|Required|Type|Default|Description|
 |----|--------|----|-------|-----------|
-|`onSelectionStart`|No|() => void||Method called when selection starts (mouse is down and moved)|
-|`onSelectionEnd`|No|() => void||Method called when selection ends (mouse is up)
-|`onSelectionChange`|Yes|(box: Box) => void||Method called when selection moves|
-|`isEnabled`|No|boolean|`true`|If false, selection does not fire|
-|`eventsElement`|No|Window, HTMLElement or null|`window`|Element to listen mouse events|
-|`selectionProps`|No|React.HTMLAttributes||Props of selection - you can pass style here as shown below|
+|`onSelectionStart`|No|`() => void`||Method called when selection starts (mouse is down and moved)|
+|`onSelectionEnd`|No|`() => void`||Method called when selection ends (mouse is up)
+|`onSelectionChange`|Yes|`(box: Box) => void`||Method called when selection moves|
+|`isEnabled`|No|`boolean`|`true`|If false, selection does not fire|
+|`eventsElement`|No|`Window`, `HTMLElement` or `null`|`window`|Element to listen mouse events|
+|`selectionProps`|No|`React.HTMLAttributes`||Props of selection - you can pass style here as shown below|
+|`shouldStartSelecting`|No|`() => boolean`|`undefined`|If supplied, this callback is fired on mousedown and can be used to prevent selection from starting. This is useful when you want to prevent certain areas of your application from being able to be selected. Returning true will enable selection and returning false will prevent selection from starting.|
 
 ## Selection styling
 
@@ -96,19 +97,7 @@ The default style for the selection box is
   <img style='width: 400px' src="example/assets/disable-select-example.gif">
 </p>
 
-Sometimes you want to disable a user being able to start selecting in a certain area. You can use `data-disableSelect` to enable/disable the ability for a user to start a selection in the area that element takes up. See full example here: https://codesandbox.io/s/exciting-rubin-xxf6r0
-
-```tsx
-<div>
-  <DragSelection />
-  <div className="non-selectable-area" data-disableSelect={true}>
-    non-selectable area
-    <div className="selectable-area" data-disableSelect={false}>
-      selectable area
-    </div>
-  </div>
-</div>
-```
+Sometimes you want to disable a user being able to start selecting in a certain area. You can use the `shouldStartSelecting` prop for this. See full example here: https://codesandbox.io/s/exciting-rubin-xxf6r0
 
 ## Scrolling
 
