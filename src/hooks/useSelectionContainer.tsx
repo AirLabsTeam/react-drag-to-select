@@ -37,6 +37,7 @@ export function useSelectionContainer<T extends HTMLElement>(
     isEnabled = true,
     selectionProps = {},
     eventsElement,
+    shouldStartSelecting,
   } = props || {};
 
   const containerRef = useRef<SelectionContainerRef>(null);
@@ -48,6 +49,7 @@ export function useSelectionContainer<T extends HTMLElement>(
     onSelectionChange,
     isEnabled,
     eventsElement,
+    shouldStartSelecting,
   });
 
   const DragSelection = useCallback(() => <SelectionContainer ref={containerRef} {...selectionProps} />, []);
