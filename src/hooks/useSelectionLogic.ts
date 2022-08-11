@@ -15,8 +15,8 @@ export interface UseSelectionLogicParams<T extends HTMLElement> {
   onSelectionChange?: OnSelectionChange;
   /** This boolean enables selecting  */
   isEnabled?: boolean;
-  /** This is an HTML element that the mouse events (mousedown, mouseup, mousemove) should be attached to. Defaults to the window */
-  eventsElement?: Window | T | null;
+  /** This is an HTML element that the mouse events (mousedown, mouseup, mousemove) should be attached to. Defaults to the document.body */
+  eventsElement?: T | null;
   /** This is the ref of the parent of the selection box  */
   containerRef: RefObject<SelectionContainerRef>;
   /**
@@ -39,14 +39,14 @@ export function useSelectionLogic<T extends HTMLElement>({
   onSelectionStart,
   onSelectionEnd,
   isEnabled = true,
-  eventsElement = typeof window !== 'undefined' ? window : undefined,
+  eventsElement,
   shouldStartSelecting,
 }: UseSelectionLogicParams<T>): UseSelectionLogicResult {
   const startPoint = useRef<null | Point>(null);
   const endPoint = useRef<null | Point>(null);
   const isSelecting = useRef(false);
 
-  // these are used in listeners attached to window events. They are used as refs to ensure we always use the latest version
+  // these are used in listeners attached to eventsElement. They are used as refs to ensure we always use the latest version
   const currentSelectionChange = useRef(onSelectionChange);
   const currentSelectionStart = useRef(onSelectionStart);
   const currentSelectionEnd = useRef(onSelectionEnd);
@@ -142,27 +142,27 @@ export function useSelectionLogic<T extends HTMLElement>({
   );
 
   const onMouseMove = useCallback(
-    (e: Event) => {
+    (e: MouseEvent) => {
       if (!startPoint.current) {
         return;
       }
 
       const rect = containerRef.current?.getParentBoundingClientRect();
-      endPoint.current = getPointFromEvent(e as MouseEvent, rect);
+      endPoint.current = getPointFromEvent(e, rect);
       handleMouseMove(rect);
     },
     [handleMouseMove, getPointFromEvent, containerRef],
   );
 
   const onMouseUp = useCallback(
-    (e: Event) => {
+    (e: MouseEvent) => {
       // handle only left button click
-      if ((e as MouseEvent).button === 0) {
+      if (e.button === 0) {
         cancelCurrentSelection();
         document.body.style.removeProperty('userSelect');
         document.body.style.removeProperty('webkitUserSelect');
 
-        eventsElement?.removeEventListener('mousemove', onMouseMove);
+        (eventsElement || document.body).removeEventListener('mousemove', onMouseMove);
         window?.removeEventListener('mouseup', onMouseUp);
       }
     },
@@ -170,9 +170,9 @@ export function useSelectionLogic<T extends HTMLElement>({
   );
 
   const onMouseDown = useCallback(
-    (e: Event) => {
+    (e: MouseEvent) => {
       // handle only left button click
-      if ((e as MouseEvent).button === 0 && isEnabledRef.current) {
+      if (e.button === 0 && isEnabledRef.current) {
         if (typeof shouldStartSelecting === 'function' && !shouldStartSelecting(e.target)) {
           return;
         }
@@ -180,9 +180,9 @@ export function useSelectionLogic<T extends HTMLElement>({
         // disable text selection for all document
         document.body.style.userSelect = 'none';
         document.body.style.webkitUserSelect = 'none';
-        startPoint.current = getPointFromEvent(e as MouseEvent);
+        startPoint.current = getPointFromEvent(e);
 
-        eventsElement?.addEventListener('mousemove', onMouseMove);
+        (eventsElement || document.body).addEventListener('mousemove', onMouseMove);
         window?.addEventListener('mouseup', onMouseUp);
       }
     },
@@ -190,11 +190,11 @@ export function useSelectionLogic<T extends HTMLElement>({
   );
 
   useEffect(() => {
-    eventsElement?.addEventListener('mousedown', onMouseDown);
+    (eventsElement || document.body).addEventListener('mousedown', onMouseDown);
 
     return () => {
-      eventsElement?.removeEventListener('mousedown', onMouseDown);
-      eventsElement?.removeEventListener('mousemove', onMouseMove);
+      (eventsElement || document.body).removeEventListener('mousedown', onMouseDown);
+      (eventsElement || document.body).removeEventListener('mousemove', onMouseMove);
       window.removeEventListener('mouseup', onMouseUp);
     };
   }, [eventsElement, onMouseDown, onMouseMove, onMouseUp]);
