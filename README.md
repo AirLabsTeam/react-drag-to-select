@@ -1,5 +1,5 @@
 <p align="center">
-  <img style='width: 400px' src="example/assets/example.gif">
+  <img style="width: 800px" src="https://user-images.githubusercontent.com/1065539/184370954-6398b161-25f5-455c-9dcb-197588b40057.gif" />
 </p>
 
 <h1 align="center">React drag-to-select</h1>
