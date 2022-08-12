@@ -97,7 +97,30 @@ The default style for the selection box is
   <img style='width: 400px' src="example/assets/disable-select-example.gif">
 </p>
 
-Sometimes you want to disable a user being able to start selecting in a certain area. You can use the `shouldStartSelecting` prop for this. See full example here: https://codesandbox.io/s/exciting-rubin-xxf6r0
+Sometimes you want to disable a user being able to start selecting in a certain area. You can use the `shouldStartSelecting` prop for this.
+
+```tsx
+const { DragSelection } = useSelectionContainer({
+  shouldStartSelecting: (target) => {
+    /**
+     * In this example, we're preventing users from selecting in elements that
+     * have a data-disableselect prop on them or one of their parents
+     *
+     */
+    if (target instanceof HTMLElement) {
+      let el = target;
+      while (el.parentElement && !el.dataset.disableselect) {
+        el = el.parentElement;
+      }
+      return el.dataset.disableselect !== "true";
+    }
+
+    return true;
+  }
+});
+```
+
+See full example here: https://codesandbox.io/s/exciting-rubin-xxf6r0
 
 ## Scrolling
 
