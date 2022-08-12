@@ -105,7 +105,6 @@ const { DragSelection } = useSelectionContainer({
     /**
      * In this example, we're preventing users from selecting in elements
      * that have a data-disableselect attribute on them or one of their parents
-     *
      */
     if (target instanceof HTMLElement) {
       let el = target;
@@ -115,7 +114,11 @@ const { DragSelection } = useSelectionContainer({
       return el.dataset.disableselect !== "true";
     }
 
-    return true;
+    /**
+    * If the target doesn't exist, return false
+    * This would most likely not happen. It's really a TS safety check
+    */
+    return false;
   }
 });
 ```
