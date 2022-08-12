@@ -103,8 +103,8 @@ Sometimes you want to disable a user being able to start selecting in a certain 
 const { DragSelection } = useSelectionContainer({
   shouldStartSelecting: (target) => {
     /**
-     * In this example, we're preventing users from selecting in elements that
-     * have a data-disableselect prop on them or one of their parents
+     * In this example, we're preventing users from selecting in elements
+     * that have a data-disableselect attribute on them or one of their parents
      *
      */
     if (target instanceof HTMLElement) {
