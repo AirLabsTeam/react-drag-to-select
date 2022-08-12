@@ -131,9 +131,3 @@ Because we use the mouse position to calculate the selection box's coordinates, 
 
 How this is solved on your end is modifiying the `left` (for horizontal scrolling) and `top` (for vertical scrolling) of the `selectionBox` that is passed to `handleSelectionChange`. See the [`onSelectionChange` in the example](https://github.com/AirLabsTeam/react-drag-to-select/blob/main/example/src/App.tsx#L20) for an idea of how to do this.
 
-## Used by
-
-[<img src="./example/assets/air.png" height="25" width="50">]([http://google.com.au/](https://air.inc))
-
-<img src="https://img.shields.io/npm/l/@air/react-drag-to-select?color=41C300" alt="MIT License">
-
