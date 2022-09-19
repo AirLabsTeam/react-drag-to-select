@@ -159,8 +159,8 @@ export function useSelectionLogic<T extends HTMLElement>({
       // handle only left button click
       if (e.button === 0) {
         cancelCurrentSelection();
-        document.body.style.removeProperty('userSelect');
-        document.body.style.removeProperty('webkitUserSelect');
+        document.body.style.removeProperty('user-select');
+        document.body.style.removeProperty('-webkit-user-select');
 
         (eventsElement || document.body).removeEventListener('mousemove', onMouseMove);
         window?.removeEventListener('mouseup', onMouseUp);
