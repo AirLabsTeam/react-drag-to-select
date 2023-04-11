@@ -19,6 +19,10 @@ export const SelectionContainer = forwardRef(({ style = {}, ...props }: Selectio
     (): SelectionContainerRef => ({
       getBoundingClientRect: () => containerRef.current?.getBoundingClientRect(),
       getParentBoundingClientRect: () => containerRef?.current?.parentElement?.getBoundingClientRect(),
+      getParentScroll: () => ({
+        scrollTop: containerRef.current?.parentElement?.scrollTop,
+        scrollLeft: containerRef.current?.parentElement?.scrollLeft
+      }),
       drawSelectionBox: (box: SelectionBox) => {
         requestAnimationFrame(() => {
           if (selectionBoxRef.current) {

@@ -19,4 +19,8 @@ export interface SelectionContainerRef {
   clearSelectionBox: () => void;
   getBoundingClientRect: () => DOMRect | undefined;
   getParentBoundingClientRect: () => DOMRect | undefined;
+  getParentScroll: () => {
+    scrollTop: number | undefined;
+    scrollLeft: number | undefined;
+  };
 }

@@ -93,8 +93,8 @@ export function useSelectionLogic<T extends HTMLElement>({
       }
 
       return {
-        x: event.clientX - (rect?.left || 0),
-        y: event.clientY - (rect?.top || 0),
+        x: event.clientX - (rect?.left || 0) + (containerRef.current?.getParentScroll().scrollLeft || 0),
+        y: event.clientY - (rect?.top || 0) + (containerRef.current?.getParentScroll().scrollTop || 0),
       };
     },
     [containerRef],

@@ -1,11 +1,11 @@
 {
-  "name": "@air/react-drag-to-select",
-  "version": "5.0.5",
+  "name": "@deafnv/react-drag-to-select",
+  "version": "5.0.6",
   "description": "A performant React library which adds drag to select to your app",
   "type": "module",
   "author": "Air Labs, Inc.",
   "license": "MIT",
-  "repository": "AirLabsTeam/react-drag-to-select",
+  "repository": "deafnv/react-drag-to-select",
   "source": "src/index.ts",
   "exports": {
     "require": "./dist/index.cjs",
