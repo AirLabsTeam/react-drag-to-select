@@ -1,4 +1,4 @@
-import  { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import './App.css';
 import { Box, boxesIntersect, useSelectionContainer } from '@air/react-drag-to-select';
 
@@ -12,14 +12,14 @@ function App() {
     eventsElement: document.getElementById('root'),
     onSelectionChange: (box) => {
       /**
-       * Here we make sure to adjust the box's left and top with the scroll position of the window 
+       * Here we make sure to adjust the box's left and top with the scroll position of the window
        * @see https://github.com/AirLabsTeam/react-drag-to-select/#scrolling
        */
       const scrollAwareBox = {
         ...box,
         top: box.top + window.scrollY,
-        left: box.left + window.scrollX
-      }
+        left: box.left + window.scrollX,
+      };
 
       setSelectionBox(scrollAwareBox);
       const indexesToSelect: number[] = [];
@@ -31,10 +31,12 @@ function App() {
 
       setSelectedIndexes(indexesToSelect);
     },
-    onSelectionStart: () => {
-      console.log('OnSelectionStart');
+    onSelectionStart: (e) => {
+      console.log('OnSelectionStart', e);
     },
-    onSelectionEnd: () => console.log('OnSelectionEnd'),
+    onSelectionEnd: (e) => {
+      console.log('OnSelectionEnd', e);
+    },
     selectionProps: {
       style: {
         border: '2px dashed purple',
@@ -47,11 +49,10 @@ function App() {
       // do something with target to determine if the user should start selecting
 
       return true;
-    }
+    },
   });
 
   useEffect(() => {
-  
     if (elementsContainerRef.current) {
       Array.from(elementsContainerRef.current.children).forEach((item) => {
         const { left, top, width, height } = item.getBoundingClientRect();
@@ -64,13 +65,17 @@ function App() {
       });
     }
   }, []);
-  
+
   return (
     <div className="container">
       <DragSelection />
       <div id="elements-container" className="elements-container" ref={elementsContainerRef}>
         {Array.from({ length: 16 }, (_, i) => (
-          <div data-testid={`grid-cell-${i}`} key={i} className={`element ${selectedIndexes.includes(i) ? 'selected' : ''} `} />
+          <div
+            data-testid={`grid-cell-${i}`}
+            key={i}
+            className={`element ${selectedIndexes.includes(i) ? 'selected' : ''} `}
+          />
         ))}
       </div>
 
