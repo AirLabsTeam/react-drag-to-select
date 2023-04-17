@@ -31,12 +31,8 @@ function App() {
 
       setSelectedIndexes(indexesToSelect);
     },
-    onSelectionStart: (e) => {
-      console.log('OnSelectionStart', e);
-    },
-    onSelectionEnd: (e) => {
-      console.log('OnSelectionEnd', e);
-    },
+    onSelectionStart: () => {},
+    onSelectionEnd: () => {},
     selectionProps: {
       style: {
         border: '2px dashed purple',
