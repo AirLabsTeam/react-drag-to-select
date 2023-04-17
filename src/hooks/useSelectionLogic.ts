@@ -75,7 +75,7 @@ export function useSelectionLogic<T extends HTMLElement>({
     endPoint.current = null;
     isSelecting.current = false;
     containerRef.current?.clearSelectionBox();
-    if (onChangeRefId.current) {
+    if (typeof onChangeRefId.current === 'number') {
       cancelAnimationFrame(onChangeRefId.current);
     }
   }, [containerRef]);
@@ -90,8 +90,8 @@ export function useSelectionLogic<T extends HTMLElement>({
       }
 
       return {
-        x: event.clientX - (rect?.left || 0),
-        y: event.clientY - (rect?.top || 0),
+        x: event.clientX - (typeof rect?.left === 'number' ? rect.left : 0),
+        y: event.clientY - (typeof rect?.top === 'number' ? rect.top : 0),
       };
     },
     [containerRef],
@@ -106,6 +106,7 @@ export function useSelectionLogic<T extends HTMLElement>({
         if (!rect) {
           return;
         }
+
         const newSelectionBox = calculateSelectionBox({
           startPoint: startPoint.current,
           endPoint: endPoint.current,
@@ -128,7 +129,7 @@ export function useSelectionLogic<T extends HTMLElement>({
           }
           containerRef.current?.drawSelectionBox(newSelectionBox);
           currentSelectionChange.current?.(boxInContainer);
-        } else if (isSelecting) {
+        } else if (isSelecting.current) {
           currentSelectionChange.current?.(boxInContainer);
         }
       } else {
