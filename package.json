@@ -16,7 +16,8 @@
   "unpkg": "./dist/index.umd.js",
   "typings": "dist/index",
   "scripts": {
-    "build": "microbundle",
+    "lint": "npx eslint .",
+    "build": "npm run lint && microbundle",
     "dev": "microbundle watch",
     "pretty": "prettier --config .prettierrc 'src/**/*.(ts|tsx)' --write",
     "test": "jest",
