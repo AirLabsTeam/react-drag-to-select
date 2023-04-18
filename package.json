@@ -1,6 +1,6 @@
 {
-  "name": "@deafnv/react-drag-to-select",
-  "version": "5.0.6",
+  "name": "@air/react-drag-to-select",
+  "version": "5.0.7",
   "description": "A performant React library which adds drag to select to your app",
   "type": "module",
   "author": "Air Labs, Inc.",
@@ -16,7 +16,8 @@
   "unpkg": "./dist/index.umd.js",
   "typings": "dist/index",
   "scripts": {
-    "build": "microbundle",
+    "lint": "npx eslint .",
+    "build": "npm run lint && microbundle",
     "dev": "microbundle watch",
     "pretty": "prettier --config .prettierrc 'src/**/*.(ts|tsx)' --write",
     "test": "jest",

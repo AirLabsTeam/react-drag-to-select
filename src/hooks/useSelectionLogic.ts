@@ -8,9 +8,9 @@ export interface UseSelectionLogicResult {
 
 export interface UseSelectionLogicParams<T extends HTMLElement> {
   /** This callback will fire when the user starts selecting */
-  onSelectionStart?: () => void;
+  onSelectionStart?: (event: MouseEvent) => void;
   /** This callback will fire when the user finishes selecting */
-  onSelectionEnd?: () => void;
+  onSelectionEnd?: (event: MouseEvent) => void;
   /** This callback will fire when the user's mouse changes position while selecting using requestAnimationFrame */
   onSelectionChange?: OnSelectionChange;
   /** This boolean enables selecting  */
@@ -75,11 +75,8 @@ export function useSelectionLogic<T extends HTMLElement>({
     endPoint.current = null;
     isSelecting.current = false;
     containerRef.current?.clearSelectionBox();
-    if (onChangeRefId.current) {
+    if (typeof onChangeRefId.current === 'number') {
       cancelAnimationFrame(onChangeRefId.current);
-    }
-    if (currentSelectionEnd?.current) {
-      currentSelectionEnd.current();
     }
   }, [containerRef]);
 
@@ -93,8 +90,8 @@ export function useSelectionLogic<T extends HTMLElement>({
       }
 
       return {
-        x: event.clientX - (rect?.left || 0) + (containerRef.current?.getParentScroll().scrollLeft || 0),
-        y: event.clientY - (rect?.top || 0) + (containerRef.current?.getParentScroll().scrollTop || 0),
+        x: event.clientX - (typeof rect?.left === 'number' ? rect.left : 0) + (containerRef.current?.getParentScroll().scrollLeft || 0),
+        y: event.clientY - (typeof rect?.top === 'number' ? rect.top : 0) + (containerRef.current?.getParentScroll().scrollTop || 0),
       };
     },
     [containerRef],
@@ -104,11 +101,12 @@ export function useSelectionLogic<T extends HTMLElement>({
    * Method called on mousemove event
    */
   const handleMouseMove = useCallback(
-    (rect?: DOMRect) => {
+    (event: MouseEvent, rect?: DOMRect) => {
       if (startPoint.current && endPoint.current) {
         if (!rect) {
           return;
         }
+
         const newSelectionBox = calculateSelectionBox({
           startPoint: startPoint.current,
           endPoint: endPoint.current,
@@ -125,13 +123,13 @@ export function useSelectionLogic<T extends HTMLElement>({
         if (calculateBoxArea(newSelectionBox) > 10) {
           if (!isSelecting.current) {
             if (currentSelectionStart?.current) {
-              currentSelectionStart.current();
+              currentSelectionStart.current(event);
             }
             isSelecting.current = true;
           }
           containerRef.current?.drawSelectionBox(newSelectionBox);
           currentSelectionChange.current?.(boxInContainer);
-        } else if (isSelecting) {
+        } else if (isSelecting.current) {
           currentSelectionChange.current?.(boxInContainer);
         }
       } else {
@@ -142,23 +140,35 @@ export function useSelectionLogic<T extends HTMLElement>({
   );
 
   const onMouseMove = useCallback(
-    (e: MouseEvent) => {
+    (event: MouseEvent) => {
       if (!startPoint.current) {
         return;
       }
 
       const rect = containerRef.current?.getParentBoundingClientRect();
-      endPoint.current = getPointFromEvent(e, rect);
-      handleMouseMove(rect);
+      endPoint.current = getPointFromEvent(event, rect);
+      handleMouseMove(event, rect);
     },
     [handleMouseMove, getPointFromEvent, containerRef],
   );
 
   const onMouseUp = useCallback(
-    (e: MouseEvent) => {
-      // handle only left button click
-      if (e.button === 0) {
+    (event: MouseEvent) => {
+      /**
+       * handle only left button up event
+       */
+      if (event.button === 0) {
+        /**
+         * If the user just clicked down and up in the same place without dragging,
+         * we don't want to fire the onSelectionEnd event. We can do this
+         * by checking if endPoint.current exists.
+         */
+        if (endPoint.current) {
+          currentSelectionEnd.current?.(event);
+        }
+
         cancelCurrentSelection();
+
         document.body.style.removeProperty('user-select');
         document.body.style.removeProperty('-webkit-user-select');
 
@@ -190,8 +200,14 @@ export function useSelectionLogic<T extends HTMLElement>({
   );
 
   useEffect(() => {
+    /**
+     * On mount, add the mouse down listener to begin listening for dragging
+     */
     (eventsElement || document.body).addEventListener('mousedown', onMouseDown);
 
+    /**
+     * On unmount, remove any listeners that we're applied.
+     */
     return () => {
       (eventsElement || document.body).removeEventListener('mousedown', onMouseDown);
       (eventsElement || document.body).removeEventListener('mousemove', onMouseMove);
