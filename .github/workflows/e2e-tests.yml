@@ -1,44 +1,30 @@
 name: End-to-end tests
-on: [push]
+on:
+  deployment_status:
+
 jobs:
-  tests:
+  cypress-run:
     runs-on: ubuntu-latest
+    container:
+      image: dwilt4rville/my-cypress-image:tag
+    if: github.event.deployment_status.state == 'success'
+    strategy:
+      fail-fast: false
+      matrix:
+        containers: [1, 2, 3, 4]
+
     steps:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - uses: actions/setup-node@v3
+      - name: Run Cypress tests
+        uses: cypress-io/github-action@v2
         with:
-          node-version: 16
-
-      - name: Cache root dependencies
-        id: root-cache
-        uses: actions/cache@v3
-        with:
-          path: ./node_modules
-          key: modules-${{ hashFiles('package-lock.json') }}
-
-      - name: Install root dependencies
-        if: steps.root-cache.outputs.cache-hit != 'true'
-        run: npm ci --ignore-scripts
-
-      - name: Cache example dependencies
-        id: example-cache
-        uses: actions/cache@v3
-        with:
-          path: example/node_modules
-          key: modules-${{ hashFiles('example/package-lock.json') }}
-
-      - name: Install example dependencies
-        if: steps.example-cache.outputs.cache-hit != 'true'
-        run: cd example; npm ci --ignore-scripts
-
-      - name: Build project
-        run: npm run build
-
-      - name: Cypress run
-        uses: cypress-io/github-action@v4
-        with:
-          browser: chrome
-          start: npm run ci:start-example
-          wait-on: 'http://localhost:3000'
+          working-directory: cypress
+          config: baseUrl=${{ github.event.deployment_status.target_url }}
+          parallel: true
+          group: 'Group name'
+          record: true
+          install: false
+        env:
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
