@@ -1,6 +1,6 @@
 import { RefObject, useCallback, useEffect, useRef } from 'react';
 import { SelectionContainerRef, OnSelectionChange, Point, SelectionBox, Box } from '../utils/types';
-import { calculateBoxArea, calculateSelectionBox } from '../utils/boxes';
+import { calculateSelectionBox } from '../utils/boxes';
 
 export interface UseSelectionLogicResult {
   cancelCurrentSelection: () => void;
@@ -120,7 +120,7 @@ export function useSelectionLogic<T extends HTMLElement>({
         };
 
         // we detect move only after some small movement
-        if (calculateBoxArea(newSelectionBox) > 10) {
+        if (newSelectionBox.height + newSelectionBox.width > 8) {
           if (!isSelecting.current) {
             if (currentSelectionStart?.current) {
               currentSelectionStart.current(event);
