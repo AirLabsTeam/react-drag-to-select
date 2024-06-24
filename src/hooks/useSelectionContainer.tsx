@@ -17,7 +17,13 @@ export interface UseSelectionContainerResult {
 export interface UseSelectionContainerParams<T extends HTMLElement>
   extends Pick<
     UseSelectionLogicParams<T>,
-    'onSelectionChange' | 'onSelectionEnd' | 'onSelectionStart' | 'isEnabled' | 'eventsElement' | 'shouldStartSelecting'
+    | 'onSelectionChange'
+    | 'onSelectionEnd'
+    | 'onSelectionStart'
+    | 'isEnabled'
+    | 'eventsElement'
+    | 'shouldStartSelecting'
+    | 'isValidSelectionStart'
   > {
   /** These are props that get passed to the selection box component (where styling gets passed in) */
   selectionProps?: SelectionContainerProps;
@@ -38,6 +44,7 @@ export function useSelectionContainer<T extends HTMLElement>(
     selectionProps = {},
     eventsElement,
     shouldStartSelecting,
+    isValidSelectionStart,
   } = props || {};
 
   const containerRef = useRef<SelectionContainerRef>(null);
@@ -50,6 +57,7 @@ export function useSelectionContainer<T extends HTMLElement>(
     isEnabled,
     eventsElement,
     shouldStartSelecting,
+    isValidSelectionStart,
   });
 
   const DragSelection = useCallback(() => <SelectionContainer ref={containerRef} {...selectionProps} />, []);

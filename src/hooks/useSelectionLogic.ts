@@ -1,6 +1,6 @@
 import { RefObject, useCallback, useEffect, useRef } from 'react';
 import { SelectionContainerRef, OnSelectionChange, Point, SelectionBox, Box } from '../utils/types';
-import { calculateSelectionBox } from '../utils/boxes';
+import { calculateBoxArea, calculateSelectionBox } from '../utils/boxes';
 
 export interface UseSelectionLogicResult {
   cancelCurrentSelection: () => void;
@@ -27,6 +27,16 @@ export interface UseSelectionLogicParams<T extends HTMLElement> {
    * @param {EventTarget | null} target - The element the mousedown event fired on when the user started selected
    */
   shouldStartSelecting?: (target: EventTarget | null) => boolean;
+
+  /**
+   * Determines whether a selection's dimensions meet the criteria for initiating a selection.
+   * The prupose is to distinguish between clicks and the start of a selection gesture.
+   *
+   * The default implementation checks if the area of the box (width * height) is greater than 10.
+   *
+   * @returns `true` if the box dimensions meet the threshold for starting a selection, otherwise `false`.
+   */
+  isValidSelectionStart?: (box: Box) => boolean;
 }
 
 /**
@@ -41,6 +51,7 @@ export function useSelectionLogic<T extends HTMLElement>({
   isEnabled = true,
   eventsElement,
   shouldStartSelecting,
+  isValidSelectionStart = isValidSelectionStartDefault,
 }: UseSelectionLogicParams<T>): UseSelectionLogicResult {
   const startPoint = useRef<null | Point>(null);
   const endPoint = useRef<null | Point>(null);
@@ -120,7 +131,7 @@ export function useSelectionLogic<T extends HTMLElement>({
         };
 
         // we detect move only after some small movement
-        if (newSelectionBox.height + newSelectionBox.width > 8) {
+        if (isValidSelectionStart(newSelectionBox)) {
           if (!isSelecting.current) {
             if (currentSelectionStart?.current) {
               currentSelectionStart.current(event);
@@ -218,4 +229,8 @@ export function useSelectionLogic<T extends HTMLElement>({
   return {
     cancelCurrentSelection,
   };
+}
+
+function isValidSelectionStartDefault(box: Box): boolean {
+  return calculateBoxArea(box) > 10;
 }
