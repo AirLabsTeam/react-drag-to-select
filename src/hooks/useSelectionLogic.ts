@@ -30,7 +30,7 @@ export interface UseSelectionLogicParams<T extends HTMLElement> {
 
   /**
    * Determines whether a selection's dimensions meet the criteria for initiating a selection.
-   * The prupose is to distinguish between clicks and the start of a selection gesture.
+   * The purpose is to distinguish between clicks and the start of a selection gesture.
    *
    * The default implementation checks if the area of the box (width * height) is greater than 10.
    *
@@ -51,7 +51,7 @@ export function useSelectionLogic<T extends HTMLElement>({
   isEnabled = true,
   eventsElement,
   shouldStartSelecting,
-  isValidSelectionStart = isValidSelectionStartDefault,
+  isValidSelectionStart = isMinumumBoxArea,
 }: UseSelectionLogicParams<T>): UseSelectionLogicResult {
   const startPoint = useRef<null | Point>(null);
   const endPoint = useRef<null | Point>(null);
@@ -231,6 +231,6 @@ export function useSelectionLogic<T extends HTMLElement>({
   };
 }
 
-function isValidSelectionStartDefault(box: Box): boolean {
+function isMinumumBoxArea(box: Box): boolean {
   return calculateBoxArea(box) > 10;
 }
