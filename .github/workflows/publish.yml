@@ -22,7 +22,7 @@ jobs:
       - name: Push version to main
         uses: CasperWA/push-protected@v2
         with:
-          token: ${{ secrets.DWILT_PAT_FOR_PUSHING_PROTECTED_BRANCH }}
+          token: ${{ secrets.AIR_DEV_BOT_PAT }}
           branch: main
           unprotect_reviews: true
 
