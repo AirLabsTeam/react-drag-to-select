@@ -16,8 +16,8 @@ jobs:
           scope: '@air'
       - name: Configure Git
         run: |
-          git config user.email "dwilt4rville@gmail.com"
-          git config user.name "Dan Wilt"
+          git config user.email "dev@air.inc"
+          git config user.name "air-dev-bo"
       - run: npm version ${{ github.event.release.tag_name }} -m "Release ${{ github.event.release.tag_name }} 📣"
       - name: Push version to main
         uses: CasperWA/push-protected@v2
