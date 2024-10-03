@@ -95,10 +95,8 @@ export function useSelectionLogic<T extends HTMLElement>({
    * method to calculate point from event in context of the whole screen
    */
   const getPointFromEvent = useCallback(
-    (event: MouseEvent, rect?: DOMRect): Point => {
-      if (!rect) {
-        rect = containerRef.current?.getParentBoundingClientRect();
-      }
+    (event: MouseEvent): Point => {
+      const rect = containerRef.current?.getParentBoundingClientRect();
 
       return {
         x: event.clientX - (typeof rect?.left === 'number' ? rect.left : 0),
@@ -157,7 +155,7 @@ export function useSelectionLogic<T extends HTMLElement>({
       }
 
       const rect = containerRef.current?.getParentBoundingClientRect();
-      endPoint.current = getPointFromEvent(event, rect);
+      endPoint.current = getPointFromEvent(event);
       handleMouseMove(event, rect);
     },
     [handleMouseMove, getPointFromEvent, containerRef],
