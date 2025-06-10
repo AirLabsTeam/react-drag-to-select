@@ -13,6 +13,8 @@ export interface UseSelectionLogicParams<T extends HTMLElement> {
   onSelectionEnd?: (event: MouseEvent) => void;
   /** This callback will fire when the user's mouse changes position while selecting using requestAnimationFrame */
   onSelectionChange?: OnSelectionChange;
+  /** This callback is being called on selection move and allows to transform current selection e.g. to snap it to a grid  */
+  transformOnMove?: (selection: Box) => void;
   /** This boolean enables selecting  */
   isEnabled?: boolean;
   /** This is an HTML element that the mouse events (mousedown, mouseup, mousemove) should be attached to. Defaults to the document.body */
@@ -48,6 +50,7 @@ export function useSelectionLogic<T extends HTMLElement>({
   onSelectionChange,
   onSelectionStart,
   onSelectionEnd,
+  transformOnMove,
   isEnabled = true,
   eventsElement,
   shouldStartSelecting,
@@ -121,6 +124,8 @@ export function useSelectionLogic<T extends HTMLElement>({
           endPoint: endPoint.current,
         });
 
+        transformOnMove?.(newSelectionBox);
+
         // calculate box in context of container to compare with items' coordinates
         const boxInContainer: SelectionBox = {
           ...newSelectionBox,
@@ -145,7 +150,7 @@ export function useSelectionLogic<T extends HTMLElement>({
         cancelCurrentSelection();
       }
     },
-    [cancelCurrentSelection, containerRef],
+    [cancelCurrentSelection, containerRef, transformOnMove],
   );
 
   const onMouseMove = useCallback(
