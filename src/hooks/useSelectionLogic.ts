@@ -18,7 +18,7 @@ export interface UseSelectionLogicParams<T extends HTMLElement> {
   /** This is an HTML element that the mouse events (mousedown, mouseup, mousemove) should be attached to. Defaults to the document.body */
   eventsElement?: T | null;
   /** This is the ref of the parent of the selection box  */
-  containerRef: RefObject<SelectionContainerRef>;
+  containerRef: RefObject<SelectionContainerRef | null>;
   /**
    * If supplied, this callback is fired on mousedown and can be used to prevent selection from starting.
    * This is useful when you want to prevent certain areas of your application from being able to be selected.
@@ -61,7 +61,7 @@ export function useSelectionLogic<T extends HTMLElement>({
   const currentSelectionChange = useRef(onSelectionChange);
   const currentSelectionStart = useRef(onSelectionStart);
   const currentSelectionEnd = useRef(onSelectionEnd);
-  const onChangeRefId = useRef<number | undefined>();
+  const onChangeRefId = useRef<number | undefined>(undefined);
   const isEnabledRef = useRef(isEnabled);
 
   currentSelectionChange.current = useCallback(
