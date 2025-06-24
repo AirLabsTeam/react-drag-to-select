@@ -1,6 +1,6 @@
 {
   "name": "@air/react-drag-to-select",
-  "version": "5.0.10",
+  "version": "5.0.11-rc.1",
   "description": "A performant React library which adds drag to select to your app",
   "type": "module",
   "author": "Air Labs, Inc.",
@@ -17,13 +17,14 @@
   "unpkg": "./dist/index.umd.js",
   "typings": "dist/index",
   "scripts": {
-    "lint": "npx eslint .",
+    "lint": "eslint .",
     "build": "npm run lint && microbundle",
     "dev": "microbundle watch",
     "pretty": "prettier --config .prettierrc 'src/**/*.(ts|tsx)' --write",
     "test": "jest",
     "ci:start-example": "cd example; npm start",
-    "cypress": "npx cypress open"
+    "cypress": "npx cypress open",
+    "publish:rc": "npm publish --tag rc --access public"
   },
   "dependencies": {
     "react-style-object-to-css": "^1.1.2"
