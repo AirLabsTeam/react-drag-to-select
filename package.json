@@ -23,8 +23,7 @@
     "pretty": "prettier --config .prettierrc 'src/**/*.(ts|tsx)' --write",
     "test": "jest",
     "ci:start-example": "cd example; npm start",
-    "cypress": "npx cypress open",
-    "publish:rc": "npm publish --tag rc --access public"
+    "cypress": "npx cypress open"
   },
   "dependencies": {
     "react-style-object-to-css": "^1.1.2"
