@@ -11,7 +11,7 @@ jobs:
           ref: main
       - uses: actions/setup-node@v3
         with:
-          node-version: '16.x'
+          node-version-file: '.nvmrc'
           registry-url: 'https://registry.npmjs.org'
           scope: '@air'
       - name: Configure Git
