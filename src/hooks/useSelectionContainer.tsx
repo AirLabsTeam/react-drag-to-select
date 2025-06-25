@@ -20,6 +20,7 @@ export interface UseSelectionContainerParams<T extends HTMLElement>
     | 'onSelectionChange'
     | 'onSelectionEnd'
     | 'onSelectionStart'
+    | 'transformOnMove'
     | 'isEnabled'
     | 'eventsElement'
     | 'shouldStartSelecting'
@@ -40,6 +41,7 @@ export function useSelectionContainer<T extends HTMLElement>(
     onSelectionChange,
     onSelectionEnd,
     onSelectionStart,
+    transformOnMove,
     isEnabled = true,
     selectionProps = {},
     eventsElement,
@@ -54,6 +56,7 @@ export function useSelectionContainer<T extends HTMLElement>(
     onSelectionEnd,
     onSelectionStart,
     onSelectionChange,
+    transformOnMove,
     isEnabled,
     eventsElement,
     shouldStartSelecting,

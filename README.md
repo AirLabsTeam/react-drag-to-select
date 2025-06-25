@@ -58,6 +58,7 @@ Check out this codesandbox for a complete working example: https://codesandbox.i
 |`onSelectionStart`|No|`() => void`||Method called when selection starts (mouse is down and moved)|
 |`onSelectionEnd`|No|`() => void`||Method called when selection ends (mouse is up)
 |`onSelectionChange`|Yes|`(box: Box) => void`||Method called when selection moves|
+|`transformOnMove`|No|`(box: Box) => void`||Method is called on selection move and allows to transform current selection e.g. to snap it to a grid|
 |`isEnabled`|No|`boolean`|`true`|If false, selection does not fire|
 |`eventsElement`|No|`Window`, `HTMLElement` or `null`|`window`|Element to listen mouse events|
 |`selectionProps`|No|`React.HTMLAttributes`||Props of selection - you can pass style here as shown below|
