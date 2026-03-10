@@ -17,6 +17,8 @@ export interface UseSelectionLogicParams<T extends HTMLElement> {
   isEnabled?: boolean;
   /** This is an HTML element that the mouse events (mousedown, mouseup, mousemove) should be attached to. Defaults to the document.body */
   eventsElement?: T | null;
+  /** Which mouse clicks are allowed to initiate a selection. Defaults to [0] (only left click) */
+  mouseButtons?: Array<0 | 1 | 2>;
   /** This is the ref of the parent of the selection box  */
   containerRef: RefObject<SelectionContainerRef | null>;
   /**
@@ -43,6 +45,7 @@ export interface UseSelectionLogicParams<T extends HTMLElement> {
  * This hook contains logic for selecting. It starts 'selection' on mousedown event and finishes it on mouseup event.
  * When mousemove event is detected and user is selecting, it calls onSelectionChange and containerRef.drawSelectionBox
  */
+const DEFAULT_MOUSE_BUTTONS: Array<0 | 1 | 2> = [0];
 export function useSelectionLogic<T extends HTMLElement>({
   containerRef,
   onSelectionChange,
@@ -50,12 +53,14 @@ export function useSelectionLogic<T extends HTMLElement>({
   onSelectionEnd,
   isEnabled = true,
   eventsElement,
+  mouseButtons,
   shouldStartSelecting,
   isValidSelectionStart = isMinumumBoxArea,
 }: UseSelectionLogicParams<T>): UseSelectionLogicResult {
   const startPoint = useRef<null | Point>(null);
   const endPoint = useRef<null | Point>(null);
   const isSelecting = useRef(false);
+  const activeMouseButton = useRef<null | 0 | 1 | 2>(null);
 
   // these are used in listeners attached to eventsElement. They are used as refs to ensure we always use the latest version
   const currentSelectionChange = useRef(onSelectionChange);
@@ -63,6 +68,7 @@ export function useSelectionLogic<T extends HTMLElement>({
   const currentSelectionEnd = useRef(onSelectionEnd);
   const onChangeRefId = useRef<number | undefined>(undefined);
   const isEnabledRef = useRef(isEnabled);
+  const allowedButtons = useRef(DEFAULT_MOUSE_BUTTONS);
 
   currentSelectionChange.current = useCallback(
     (box: Box) => {
@@ -77,6 +83,7 @@ export function useSelectionLogic<T extends HTMLElement>({
   currentSelectionStart.current = onSelectionStart;
   currentSelectionEnd.current = onSelectionEnd;
   isEnabledRef.current = isEnabled;
+  allowedButtons.current = mouseButtons && mouseButtons.length ? mouseButtons : DEFAULT_MOUSE_BUTTONS;
 
   /**
    * Method to cancel selecting and reset internal data
@@ -161,12 +168,22 @@ export function useSelectionLogic<T extends HTMLElement>({
     [handleMouseMove, getPointFromEvent, containerRef],
   );
 
+  const onContextMenu = useCallback((event: MouseEvent) => {
+    if (activeMouseButton.current === 2) {
+      event.preventDefault();
+    }
+  }, []);
+
   const onMouseUp = useCallback(
     (event: MouseEvent) => {
+      const startedWith = activeMouseButton.current;
+      if (startedWith == null) {
+        return;
+      }
       /**
-       * handle only left button up event
+       * check if the button released is the same the event started with and is enabled to start drag selection
        */
-      if (event.button === 0) {
+      if (allowedButtons.current.includes(event.button as 0 | 1 | 2) && event.button === startedWith) {
         /**
          * If the user just clicked down and up in the same place without dragging,
          * we don't want to fire the onSelectionEnd event. We can do this
@@ -183,6 +200,7 @@ export function useSelectionLogic<T extends HTMLElement>({
 
         (eventsElement || document.body).removeEventListener('mousemove', onMouseMove);
         window?.removeEventListener('mouseup', onMouseUp);
+        (eventsElement || document.body).removeEventListener('contextmenu', onContextMenu);
       }
     },
     [eventsElement, cancelCurrentSelection, onMouseMove],
@@ -190,8 +208,8 @@ export function useSelectionLogic<T extends HTMLElement>({
 
   const onMouseDown = useCallback(
     (e: MouseEvent) => {
-      // handle only left button click
-      if (e.button === 0 && isEnabledRef.current) {
+      // handle only allowed mouse clicks
+      if (allowedButtons.current.includes(e.button as 0 | 1 | 2) && isEnabledRef.current) {
         if (typeof shouldStartSelecting === 'function' && !shouldStartSelecting(e.target)) {
           return;
         }
@@ -199,13 +217,19 @@ export function useSelectionLogic<T extends HTMLElement>({
         // disable text selection for all document
         document.body.style.userSelect = 'none';
         document.body.style.webkitUserSelect = 'none';
+        activeMouseButton.current = e.button as 0 | 1 | 2;
         startPoint.current = getPointFromEvent(e);
 
         (eventsElement || document.body).addEventListener('mousemove', onMouseMove);
         window?.addEventListener('mouseup', onMouseUp);
+        // Prevent context menu while drag selecting with right click, but only if it's enabled
+        if (activeMouseButton.current === 2) {
+          (eventsElement || document.body).addEventListener('contextmenu', onContextMenu);
+          e.preventDefault();
+        }
       }
     },
-    [eventsElement, getPointFromEvent, onMouseMove, onMouseUp],
+    [eventsElement, getPointFromEvent, onMouseMove, onMouseUp, onContextMenu],
   );
 
   useEffect(() => {
@@ -220,6 +244,7 @@ export function useSelectionLogic<T extends HTMLElement>({
     return () => {
       (eventsElement || document.body).removeEventListener('mousedown', onMouseDown);
       (eventsElement || document.body).removeEventListener('mousemove', onMouseMove);
+      (eventsElement || document.body).removeEventListener('contextmenu', onContextMenu);
       window.removeEventListener('mouseup', onMouseUp);
     };
   }, [eventsElement, onMouseDown, onMouseMove, onMouseUp]);
